@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="false"
+        jar="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\exploded-aar\com.facebook.android\facebook-android-sdk\4.14.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.0"
+        sha1="42a3ae86dd3ae2876d3e95c2e6e104ae57a50a65">
+        <dex dex="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\pre-dexed\debug\com.facebook.android-facebook-android-sdk-4.14.1_14efdfbfd0847e6e76fb316762b4c7a7e2ffc8c9.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\24.2.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.0"
+        sha1="c84e216d9bf618464d6b9564d71d9a656433e7c4">
+        <dex dex="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\pre-dexed\debug\com.android.support-support-core-ui-24.2.0_df3fae4088629f1c4dc3a063773d2fc0322106b5.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\exploded-aar\com.android.support\support-fragment\24.2.0\jars\libs\internal_impl-24.2.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.0"
+        sha1="032a4b53def5e2ceedfc2e793b126c0163cfa1dd">
+        <dex dex="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\pre-dexed\debug\internal_impl-24.2.0_42c40f56d6383a9a59102b461cf798fa5c20747c.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-basement\9.6.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.0"
+        sha1="f6afcfbf1989631424f9ceaae6ee24777d3cf6ba">
+        <dex dex="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\pre-dexed\debug\com.google.android.gms-play-services-basement-9.6.0_6ebb60cc2625afabaa491887b2085e3ae0c06bf9.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\exploded-aar\com.google.firebase\firebase-iid\9.6.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.0"
+        sha1="d39f676be8400123523882d189a1d84040d34339">
+        <dex dex="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\pre-dexed\debug\com.google.firebase-firebase-iid-9.6.0_5dc078b5375aa64b5ba8a53bbc923313b20dab2b.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-tasks\9.6.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.0"
+        sha1="614b2ffd04818e865e1c02cc149c6b92e518e862">
+        <dex dex="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\pre-dexed\debug\com.google.android.gms-play-services-tasks-9.6.0_3ea34a75311962f65f5d7a26a70f3d290ce6844a.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\exploded-aar\com.android.support\customtabs\23.4.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.0"
+        sha1="2d1eaa9e0b98f8fc4c2b989d9b30d4f1480648ac">
+        <dex dex="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\pre-dexed\debug\com.android.support-customtabs-23.4.0_5765cf4e168866da8032afc024b4aa29dccc4974.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\exploded-aar\com.google.firebase\firebase-database-connection\9.6.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.0"
+        sha1="db0a4170961a16af6d7a5222bf90a5876eea4227">
+        <dex dex="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\pre-dexed\debug\com.google.firebase-firebase-database-connection-9.6.0_daa7441055ad4da5774270ce3d19199fc0be6221.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\24.2.0\jars\libs\internal_impl-24.2.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.0"
+        sha1="6e02e34594ebe9c0501ffda8dd48497f81b82977">
+        <dex dex="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\pre-dexed\debug\internal_impl-24.2.0_c00c32b054883ad712b592f07d6e39451190a89c.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-base\9.6.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.0"
+        sha1="93a0248fe0524b4fa2d16f5f7c3cff8452796454">
+        <dex dex="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\pre-dexed\debug\com.google.android.gms-play-services-base-9.6.0_61f600ca6401217910bf4cd9a97bcec11dc7f3a4.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\24.2.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.0"
+        sha1="fcc945a86ebcbf527429acb8216ec7dae2c06417">
+        <dex dex="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\pre-dexed\debug\com.android.support-support-core-utils-24.2.0_4a0a62058eb84598dc31629f9d6f26b7f9e668d6.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\DMI\.gradle\caches\modules-2\files-2.1\com.parse.bolts\bolts-applinks\1.4.0\8ad21bf21784dacce5f2043afb97218cc377e835\bolts-applinks-1.4.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.0"
+        sha1="8ad21bf21784dacce5f2043afb97218cc377e835">
+        <dex dex="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\pre-dexed\debug\bolts-applinks-1.4.0_4c4d7254b8cca7600c1fe8b1aec4971001d1f169.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\24.2.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.0"
+        sha1="6eb9107eb34d2fe2b020662b7fbbec991dcba846">
+        <dex dex="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\pre-dexed\debug\com.android.support-support-media-compat-24.2.0_e588cb141d40acbfe83f64a1e8d0caa46c347153.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-auth\9.6.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.0"
+        sha1="1f4bb2577a30d0b3268fed038ed59230709ad593">
+        <dex dex="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\pre-dexed\debug\com.google.android.gms-play-services-auth-9.6.0_cc0863b961d25ece5b3b34da0b2f10bd8cd7f994.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\exploded-aar\com.android.support\support-v4\24.2.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.0"
+        sha1="45f5eda279825ff470e3f51019d374d1ef61e000">
+        <dex dex="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\pre-dexed\debug\com.android.support-support-v4-24.2.0_fb6b91583f0b338f0a9cf74b0b4f56cb4d1b42bb.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\exploded-aar\com.android.support\support-fragment\24.2.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.0"
+        sha1="d8bd2268fdcbfd52c76ade65d9900cd8def93a44">
+        <dex dex="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\pre-dexed\debug\com.android.support-support-fragment-24.2.0_3989ebaf85e6a0e5d55cfba9ab687639637ab8b1.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\DMI\.gradle\caches\modules-2\files-2.1\com.github.bumptech.glide\glide\3.6.1\86b122e640af09b0723e1fa44083c354ba6d9089\glide-3.6.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.0"
+        sha1="86b122e640af09b0723e1fa44083c354ba6d9089">
+        <dex dex="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\pre-dexed\debug\glide-3.6.1_25bec1307d58b7641c33134e76c8dc47f87ec2bf.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\exploded-aar\com.android.support\cardview-v7\23.4.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.0"
+        sha1="d9ecde39b460470e655de6e47c05573d2d5a8bfb">
+        <dex dex="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\pre-dexed\debug\com.android.support-cardview-v7-23.4.0_127d477eb5d4da32a5774679a28eabc8bd20c467.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\exploded-aar\com.firebaseui\firebase-ui-auth\0.6.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.0"
+        sha1="8ac09931704b91e7b4d281f5e34b3b006b628c22">
+        <dex dex="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\pre-dexed\debug\com.firebaseui-firebase-ui-auth-0.6.0_c8d2fb497262ba926a23f02a6977e61748208878.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\exploded-aar\com.google.firebase\firebase-database\9.6.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.0"
+        sha1="5243af50631020511cf2403789678149b1a319e6">
+        <dex dex="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\pre-dexed\debug\com.google.firebase-firebase-database-9.6.0_767b97aa1e88d5dd98ae4ffe954ebf3e44594c24.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\exploded-aar\com.android.support\support-compat\24.2.0\jars\libs\internal_impl-24.2.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.0"
+        sha1="771b3cc0e597b54da25f8086ba73180c59c6bc71">
+        <dex dex="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\pre-dexed\debug\internal_impl-24.2.0_cd7fa011e79f6140262c203a100d7ac5953c5300.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\24.2.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.0"
+        sha1="c3c638be6e650b165ab9ae144857b64e82787fad">
+        <dex dex="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\pre-dexed\debug\com.android.support-appcompat-v7-24.2.0_49d6b597920ccec010a172851c62d2f9733b19a1.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\DMI\.gradle\caches\modules-2\files-2.1\com.parse.bolts\bolts-tasks\1.4.0\d85884acf6810a3bbbecb587f239005cbc846dc4\bolts-tasks-1.4.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.0"
+        sha1="d85884acf6810a3bbbecb587f239005cbc846dc4">
+        <dex dex="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\pre-dexed\debug\bolts-tasks-1.4.0_f8093406ddee7c40c9bad60d43043c269513905b.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\24.2.0\jars\libs\internal_impl-24.2.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.0"
+        sha1="045be695d968dd707691cc55d23746dbf8cf569a">
+        <dex dex="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\pre-dexed\debug\internal_impl-24.2.0_c7a197c6b647f28c0444bd8bf5b16be88368499b.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\DMI\AppData\Local\Android\android-studio\sdk\extras\android\m2repository\com\android\support\support-annotations\24.2.0\support-annotations-24.2.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.0"
+        sha1="6be858a75633b1f0a2d24cad740db57775cb6871">
+        <dex dex="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\pre-dexed\debug\support-annotations-24.2.0_a1d88a0a409d07a8f6ddc518dcd9f59aa54bd40f.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\exploded-aar\com.google.firebase\firebase-auth\9.6.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.0"
+        sha1="580fa73d5bf63ffd04b9d66d0e75a2ed21842702">
+        <dex dex="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\pre-dexed\debug\com.google.firebase-firebase-auth-9.6.0_eed207084623592cf001390d0337dd57c3f8afb6.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\exploded-aar\com.google.firebase\firebase-common\9.6.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.0"
+        sha1="bd11b3899f275668a9355f19cea2c2320f5f9d14">
+        <dex dex="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\pre-dexed\debug\com.google.firebase-firebase-common-9.6.0_9ee29c7d8d5196d7c20ae802d76a5c49967abf42.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\24.2.0\jars\libs\internal_impl-24.2.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.0"
+        sha1="60d7b23621d31e6f42f4f76f16af467e57a20cda">
+        <dex dex="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\pre-dexed\debug\internal_impl-24.2.0_b93e024345737475da53f0aa04251b3554863741.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\exploded-aar\com.android.support\support-compat\24.2.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.0"
+        sha1="f9b41622897665678d31d78e57a361cb0cebcb0d">
+        <dex dex="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\pre-dexed\debug\com.android.support-support-compat-24.2.0_7b4bcc084a7f6856ba77c1f1ea97630f1147d65e.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\exploded-aar\com.google.firebase\firebase-auth-common\9.6.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.0"
+        sha1="7a343e17f154f513a09c12946fae0f172be079ec">
+        <dex dex="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\pre-dexed\debug\com.google.firebase-firebase-auth-common-9.6.0_8828d77efb959e88a24b45b1cc06fd789b69d3f1.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-auth-base\9.6.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.0"
+        sha1="0ef21408e3142ffbfbd4a7ec1762c3325c6c386c">
+        <dex dex="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\pre-dexed\debug\com.google.android.gms-play-services-auth-base-9.6.0_d9d97a7a35835290d5aaffe7cabb2375a85c86a6.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\exploded-aar\com.google.firebase\firebase-analytics-impl\9.6.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.0"
+        sha1="74d1712880eb2b4ab37ddf3c6a3232c883756726">
+        <dex dex="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\pre-dexed\debug\com.google.firebase-firebase-analytics-impl-9.6.0_2cac2e013f19bdbe8ff85dfac7a410271c08fa0c.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\exploded-aar\com.google.firebase\firebase-auth-module\9.6.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.0"
+        sha1="f861fce2e9fa167e7fe8d8558cf2cbb910b9fb34">
+        <dex dex="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\pre-dexed\debug\com.google.firebase-firebase-auth-module-9.6.0_f3a1b5a0d8c6b01e6a4e6b80027c844a42afc17c.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\exploded-aar\com.google.firebase\firebase-storage\9.6.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.0"
+        sha1="de2c50f4a24277d22d675d598640da6d4622b14d">
+        <dex dex="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\pre-dexed\debug\com.google.firebase-firebase-storage-9.6.0_ba3e963e66a30e6c8a38585699b25a3db347d49c.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\exploded-aar\com.android.support\design\24.2.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.0"
+        sha1="23eb0d2998a782213b56168cbf23a0688b9111d9">
+        <dex dex="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\pre-dexed\debug\com.android.support-design-24.2.0_69a49fdf7dd909c27e8f2f0e8a5e36c43fd0238e.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\exploded-aar\com.google.firebase\firebase-config\9.6.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.0"
+        sha1="53f7fbab5e6f4149eb5a1cdeabaeeeee11a84ebe">
+        <dex dex="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\pre-dexed\debug\com.google.firebase-firebase-config-9.6.0_09713c1a95462840e0c7d6af74fada52cb67f455.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\24.2.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.0"
+        sha1="beac40bcc8a320a896dd15f5109cfcaea5e1e0e3">
+        <dex dex="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\pre-dexed\debug\com.android.support-support-vector-drawable-24.2.0_f9d42216e4e52e9c1f60cc3c32f91dd42f044fc0.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\24.2.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.0"
+        sha1="c755536e5a100d9c76c8ea0b72f76c018f7a9de2">
+        <dex dex="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\pre-dexed\debug\com.android.support-recyclerview-v7-24.2.0_528f24e86b87062b6b7fbd64c7248c6f2903c282.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\exploded-aar\com.google.firebase\firebase-analytics\9.6.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.0"
+        sha1="a9f41e6463de88c3f979d796382fc24fb7e9cd41">
+        <dex dex="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\pre-dexed\debug\com.google.firebase-firebase-analytics-9.6.0_a66799b0c558213c57fecb5ef74c20121f996c2d.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\exploded-aar\com.google.firebase\firebase-storage-common\9.6.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.0"
+        sha1="5e651c1430cc9b8a3b3b5a9d92bb173214dfdf42">
+        <dex dex="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\pre-dexed\debug\com.google.firebase-firebase-storage-common-9.6.0_fe896ae2e731698482d3fdeb875cb43f61358e3d.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\24.2.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.0"
+        sha1="f3ee23ef25c9a8fe3d40246d0b7097267963a612">
+        <dex dex="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\pre-dexed\debug\com.android.support-animated-vector-drawable-24.2.0_4f29cce8397b9bbc11cfa7bd647fe9a350a07828.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\exploded-aar\com.google.firebase\firebase-messaging\9.6.0\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.0"
+        sha1="a93aa431de60b775c91158433f3c687f1d32cb9c">
+        <dex dex="D:\rishabh\and-nd-firebase-2.05-firebase-remote-config-fetch\app\build\intermediates\pre-dexed\debug\com.google.firebase-firebase-messaging-9.6.0_9056cda3ddccea2e7d7ad5f56d1698234fcd7073.jar" />
+    </item>
+
+</items>
