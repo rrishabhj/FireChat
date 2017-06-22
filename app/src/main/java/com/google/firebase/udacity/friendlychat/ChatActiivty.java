@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -28,6 +29,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -56,6 +58,7 @@ public class ChatActiivty extends AppCompatActivity {
     private ImageButton mPhotoPickerButton;
     private EditText mMessageEditText;
     private Button mSendButton;
+    private TextView tvIsOnline;
 
 
     private FirebaseDatabase mFirebaseDatabase;
@@ -69,6 +72,7 @@ public class ChatActiivty extends AppCompatActivity {
     private List<FriendlyMessage> messageList = new ArrayList<>();
     private MessageRecyclerViewAdaptor mAdapter;
     private String senderUserId;
+    private DatabaseReference mUsersDatabaseReference;
 
 
     @Override
@@ -88,7 +92,7 @@ public class ChatActiivty extends AppCompatActivity {
         mMessageEditText = (EditText) findViewById(R.id.messageEditText);
         mSendButton = (Button) findViewById(R.id.sendButton);
         recyclerView = (RecyclerView) findViewById(R.id.rv_message);
-
+        tvIsOnline = (TextView) findViewById(R.id.tv_isonline);
 
         // get senders user_id
         senderUserId = getIntent().getStringExtra("user_id");
@@ -98,7 +102,7 @@ public class ChatActiivty extends AppCompatActivity {
 
         mMessagesDatabaseReference = mFirebaseDatabase.getReference().child("messages").child(PrefUtil.getEmail(ChatActiivty.this).split("@")[0]).child(senderUserId).child("chat");
         mChatPhotosStorageReference = mFirebaseStorage.getReference().child("chat_photos");
-
+        mUsersDatabaseReference = mFirebaseDatabase.getReference().child("users").child(senderUserId.split("@")[0]).child("isOnline");
 
         // init rv
         mAdapter = new MessageRecyclerViewAdaptor(messageList);
@@ -108,6 +112,29 @@ public class ChatActiivty extends AppCompatActivity {
         recyclerView.setAdapter(mAdapter);
 
 
+
+        // isOnline event listner
+        ValueEventListener postListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                String str= (String) dataSnapshot.getValue();
+                if (str.equalsIgnoreCase("true")){
+                    tvIsOnline.setVisibility(View.VISIBLE);
+                }else{
+                    tvIsOnline.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Getting Post failed, log a message
+                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+                // ...
+            }
+        };
+
+        mUsersDatabaseReference.addValueEventListener(postListener);
 
 
         // ImagePickerButton shows an image picker to upload a image for a message

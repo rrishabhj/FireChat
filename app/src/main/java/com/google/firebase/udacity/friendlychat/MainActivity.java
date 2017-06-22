@@ -311,9 +311,7 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
         isOnline="false";
 
-        if (PrefUtil.getLoginStatus(MainActivity.this)) {
-            mUsersDatabaseReference.child(PrefUtil.getEmail(MainActivity.this).split("@")[0] + "/isOnline").setValue("false");
-        }
+
 //        writeOnlineStatus(PrefUtil.getEmail(MainActivity.this),PrefUtil.getUsername(MainActivity.this),"afasf",PrefUtil.getUserId(MainActivity.this), isOnline , "false" , "false");
         if (mAuthStateListener != null) {
             mFirebaseAuth.removeAuthStateListener(mAuthStateListener);
@@ -322,6 +320,14 @@ public class MainActivity extends AppCompatActivity {
 //        mMessageAdapter.clear();
         detachDatabaseReadListener();
     }
+
+//    @Override
+//    protected void onStop() {
+//        super.onStop();
+//        if (PrefUtil.getLoginStatus(MainActivity.this)) {
+//            mUsersDatabaseReference.child(PrefUtil.getEmail(MainActivity.this).split("@")[0] + "/isOnline").setValue("false");
+//        }
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
