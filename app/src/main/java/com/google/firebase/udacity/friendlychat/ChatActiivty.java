@@ -94,7 +94,9 @@ public class ChatActiivty extends AppCompatActivity {
         senderUserId = getIntent().getStringExtra("user_id");
 
 
-        mMessagesDatabaseReference = mFirebaseDatabase.getReference().child("messages").child(PrefUtil.getUserId(ChatActiivty.this)).child(senderUserId).child("chat");
+//        mMessagesDatabaseReference = mFirebaseDatabase.getReference().child("messages").child(PrefUtil.getUserId(ChatActiivty.this)).child(senderUserId).child("chat");
+
+        mMessagesDatabaseReference = mFirebaseDatabase.getReference().child("messages").child(PrefUtil.getEmail(ChatActiivty.this).split("@")[0]).child(senderUserId).child("chat");
         mChatPhotosStorageReference = mFirebaseStorage.getReference().child("chat_photos");
 
 

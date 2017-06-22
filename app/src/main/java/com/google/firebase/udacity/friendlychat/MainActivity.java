@@ -54,6 +54,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Transaction;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 import com.google.firebase.storage.FirebaseStorage;
@@ -151,7 +152,8 @@ public class MainActivity extends AppCompatActivity {
 
                 Intent chatActivity = new Intent(MainActivity.this,ChatActiivty.class);
 
-                chatActivity.putExtra(USER_ID,userList.get(position).getKey());
+                final String db_Email= userList.get(position).getEmail().split("@")[0];
+                chatActivity.putExtra(USER_ID,db_Email);
                 startActivity(chatActivity);
                 Toast.makeText(MainActivity.this,"Success"+userList.get(position).getU_id(),Toast.LENGTH_LONG).show();
             }
@@ -225,16 +227,35 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "Signed in!", Toast.LENGTH_SHORT).show();
 
                 FirebaseUser user = mFirebaseAuth.getCurrentUser();
-                String name= user.getDisplayName();
-                String email= user.getEmail();
-                String u_id= user.getUid();
-
+                final String name= user.getDisplayName();
+                final String email= user.getEmail();
+                final String u_id= user.getUid();
 
                 // save in firebase db
-                String key=mUsersDatabaseReference.push().getKey();
-                User user1=new User(email,name,u_id,key,isOnline,"false","false");
+                final String key = mUsersDatabaseReference.push().getKey();
+                final User user1=new User(email,name,u_id,key,isOnline,"false","false");
 
-                mUsersDatabaseReference.push().setValue(user1);
+
+                final String db_Email= email.split("@")[0];
+
+
+                mUsersDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.hasChild(db_Email)) {
+                            Toast.makeText(MainActivity.this,"Signing in",Toast.LENGTH_LONG).show();
+                        }else{
+                            mUsersDatabaseReference.child(db_Email).setValue(user1);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+
 
                 //save in sharedpref
                 PrefUtil.saveLoginDetails(MainActivity.this,key,email,name);
@@ -266,7 +287,7 @@ public class MainActivity extends AppCompatActivity {
 //
 //            }
 //        });
-//        mUsersDatabaseReference.child(PrefUtil.getUserId(MainActivity.this)+"/isOnline").setValue("true");
+
 //        writeOnlineStatus(PrefUtil.getEmail(MainActivity.this),PrefUtil.getUsername(MainActivity.this),"afasf",PrefUtil.getUserId(MainActivity.this), isOnline , "false" , "false");
     }
 
@@ -290,7 +311,9 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
         isOnline="false";
 
-//        mUsersDatabaseReference.child(PrefUtil.getUserId(MainActivity.this)).child("isOnline").setValue("false");
+        if (PrefUtil.getLoginStatus(MainActivity.this)) {
+            mUsersDatabaseReference.child(PrefUtil.getEmail(MainActivity.this).split("@")[0] + "/isOnline").setValue("false");
+        }
 //        writeOnlineStatus(PrefUtil.getEmail(MainActivity.this),PrefUtil.getUsername(MainActivity.this),"afasf",PrefUtil.getUserId(MainActivity.this), isOnline , "false" , "false");
         if (mAuthStateListener != null) {
             mFirebaseAuth.removeAuthStateListener(mAuthStateListener);
@@ -320,6 +343,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void onSignedInInitialize(String username) {
         mUsername = username;
+        mUsersDatabaseReference.child(PrefUtil.getEmail(MainActivity.this).split("@")[0]+"/isOnline").setValue("true");
         attachDatabaseReadListener();
     }
 
@@ -328,6 +352,10 @@ public class MainActivity extends AppCompatActivity {
         isOnline="false";
 //        writeOnlineStatus(PrefUtil.getEmail(MainActivity.this),PrefUtil.getUsername(MainActivity.this),"afasf",PrefUtil.getUserId(MainActivity.this), isOnline , "false" , "false");
         mUsername = ANONYMOUS;
+
+        if (PrefUtil.getLoginStatus(MainActivity.this)) {
+            mUsersDatabaseReference.child(PrefUtil.getEmail(MainActivity.this).split("@")[0] + "/isOnline").setValue("false");
+        }
         mAdapter.clear();
 //        mMessageAdapter.clear();
         PrefUtil.clearSharedPreferences(MainActivity.this);
@@ -345,7 +373,7 @@ public class MainActivity extends AppCompatActivity {
 
                     User friendlyUser = dataSnapshot.getValue(User.class);
 //                    mMessageAdapter.add(friendlyUser);
-                    if (friendlyUser.getKey()!=PrefUtil.getUserId(MainActivity.this)) {
+                    if (friendlyUser.getEmail().split("@")[0]!=PrefUtil.getEmail(MainActivity.this).split("@")[0]) {
                         userList.add(friendlyUser);
                         mAdapter.notifyDataSetChanged();
                     }
