@@ -90,7 +90,11 @@ public class ChatActiivty extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.rv_message);
 
 
-        mMessagesDatabaseReference = mFirebaseDatabase.getReference().child("messages");
+        // get senders user_id
+        senderUserId = getIntent().getStringExtra("user_id");
+
+
+        mMessagesDatabaseReference = mFirebaseDatabase.getReference().child("messages").child(PrefUtil.getUserId(ChatActiivty.this)).child(senderUserId).child("chat");
         mChatPhotosStorageReference = mFirebaseStorage.getReference().child("chat_photos");
 
 
@@ -102,8 +106,7 @@ public class ChatActiivty extends AppCompatActivity {
         recyclerView.setAdapter(mAdapter);
 
 
-        // get senders user_id
-        senderUserId = getIntent().getStringExtra("user_id");
+
 
         // ImagePickerButton shows an image picker to upload a image for a message
         mPhotoPickerButton.setOnClickListener(new View.OnClickListener() {
@@ -144,7 +147,7 @@ public class ChatActiivty extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 FriendlyMessage friendlyMessage = new FriendlyMessage(mMessageEditText.getText().toString(), PrefUtil.getUsername(ChatActiivty.this), null);
-                mMessagesDatabaseReference.push()jj.setValue(friendlyMessage);
+                mMessagesDatabaseReference.push().setValue(friendlyMessage);
 
                 // Clear input box
                 mMessageEditText.setText("");
@@ -194,6 +197,8 @@ public class ChatActiivty extends AppCompatActivity {
                 }
             };
             mMessagesDatabaseReference.addChildEventListener(mChildEventListener);
+        }else {
+            mProgressBar.setVisibility(ProgressBar.INVISIBLE);
         }
     }
 

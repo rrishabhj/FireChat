@@ -1,24 +1,27 @@
 package com.google.firebase.udacity.friendlychat.model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by DMI on 20-06-2017.
  */
-
 public class User {
     String email;
     String name;
     String u_id;
     String key;
-    int isOnline;
-    int isTyping;
-    int isReceipt;
+    String isOnline;
+    String isTyping;
+    String isReceipt;
+
 
 
     public User(){
 
     }
 
-    public User(String email, String name, String u_id, String key, int isOnline, int isTyping, int isReceipt) {
+    public User(String email, String name, String u_id, String key, String isOnline, String isTyping, String isReceipt) {
         this.email = email;
         this.name = name;
         this.u_id = u_id;
@@ -26,6 +29,19 @@ public class User {
         this.isOnline = isOnline;
         this.isTyping = isTyping;
         this.isReceipt = isReceipt;
+    }
+
+    public Map<String, String> toMap() {
+        HashMap<String, String> result = new HashMap<>();
+        result.put("email", email);
+        result.put("name", name);
+        result.put("u_id", u_id);
+        result.put("key", key);
+        result.put("isOnline", isOnline);
+        result.put("isTyping", isTyping);
+        result.put("isReceipt", isReceipt);
+
+        return result;
     }
 
     public String getEmail() {
@@ -52,25 +68,6 @@ public class User {
         this.u_id = u_id;
     }
 
-    public int getIsOnline() {
-        return isOnline;
-    }
-
-    public void setIsOnline(int isOnline) {
-        this.isOnline = isOnline;
-    }
-
-    public int getIsTyping() {
-        return isTyping;
-    }
-
-    public void setIsTyping(int isTyping) {
-        this.isTyping = isTyping;
-    }
-
-    public int getIsReceipt() {
-        return isReceipt;
-    }
 
     public String getKey() {
         return key;
@@ -80,7 +77,27 @@ public class User {
         this.key = key;
     }
 
-    public void setIsReceipt(int isReceipt) {
+    public String getIsOnline() {
+        return isOnline;
+    }
+
+    public void setIsOnline(String isOnline) {
+        this.isOnline = isOnline;
+    }
+
+    public String getIsTyping() {
+        return isTyping;
+    }
+
+    public void setIsTyping(String isTyping) {
+        this.isTyping = isTyping;
+    }
+
+    public String getIsReceipt() {
+        return isReceipt;
+    }
+
+    public void setIsReceipt(String isReceipt) {
         this.isReceipt = isReceipt;
     }
 }

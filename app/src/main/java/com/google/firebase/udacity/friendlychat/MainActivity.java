@@ -52,6 +52,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.MutableData;
+import com.google.firebase.database.Transaction;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 import com.google.firebase.storage.FirebaseStorage;
@@ -104,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private UserRecyclerViewAdaptor mAdapter;
     public String USER_ID = "user_id";
-
+    String isOnline="false";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,7 +127,8 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
+        // Initialize progress bar
+        mProgressBar.setVisibility(ProgressBar.INVISIBLE);
 
 //         Initialize users ListView and its adapter
 //        List<User> friendlyUsers = new ArrayList<>();
@@ -148,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
 
                 Intent chatActivity = new Intent(MainActivity.this,ChatActiivty.class);
 
-                chatActivity.putExtra(USER_ID,userList.get(position).getU_id());
+                chatActivity.putExtra(USER_ID,userList.get(position).getKey());
                 startActivity(chatActivity);
                 Toast.makeText(MainActivity.this,"Success"+userList.get(position).getU_id(),Toast.LENGTH_LONG).show();
             }
@@ -226,9 +229,10 @@ public class MainActivity extends AppCompatActivity {
                 String email= user.getEmail();
                 String u_id= user.getUid();
 
+
                 // save in firebase db
                 String key=mUsersDatabaseReference.push().getKey();
-                User user1=new User(email,name,u_id,key,1,1,1);
+                User user1=new User(email,name,u_id,key,isOnline,"false","false");
 
                 mUsersDatabaseReference.push().setValue(user1);
 
@@ -247,11 +251,47 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         mFirebaseAuth.addAuthStateListener(mAuthStateListener);
+        isOnline = "true";
+
+//        mUsersDatabaseReference.child(PrefUtil.getUserId(MainActivity.this)).child("isOnline").runTransaction(new Transaction.Handler() {
+//            @Override
+//            public Transaction.Result doTransaction(MutableData mutableData) {
+//
+//                mutableData.setValue("true");
+//                return Transaction.success(mutableData);
+//            }
+//
+//            @Override
+//            public void onComplete(DatabaseError databaseError, boolean b, DataSnapshot dataSnapshot) {
+//
+//            }
+//        });
+//        mUsersDatabaseReference.child(PrefUtil.getUserId(MainActivity.this)+"/isOnline").setValue("true");
+//        writeOnlineStatus(PrefUtil.getEmail(MainActivity.this),PrefUtil.getUsername(MainActivity.this),"afasf",PrefUtil.getUserId(MainActivity.this), isOnline , "false" , "false");
+    }
+
+    private void writeOnlineStatus(String email,String name,String u_id,String key,String isOnline,String isTyping,String isReceipt) {
+
+        // Create new post at /user-posts/$userid/$postid and at
+        // /posts/$postid simultaneously
+        String key1 = PrefUtil.getUserId(MainActivity.this);
+        User user = new User(email, name, u_id, key , isOnline,isTyping, isReceipt);
+        Map<String, String> postValues = user.toMap();
+
+        Map<String, Object> childUpdates = new HashMap<>();
+        childUpdates.put(key1 , postValues);
+
+        mUsersDatabaseReference.updateChildren(childUpdates);
+
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        isOnline="false";
+
+//        mUsersDatabaseReference.child(PrefUtil.getUserId(MainActivity.this)).child("isOnline").setValue("false");
+//        writeOnlineStatus(PrefUtil.getEmail(MainActivity.this),PrefUtil.getUsername(MainActivity.this),"afasf",PrefUtil.getUserId(MainActivity.this), isOnline , "false" , "false");
         if (mAuthStateListener != null) {
             mFirebaseAuth.removeAuthStateListener(mAuthStateListener);
         }
@@ -284,6 +324,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void onSignedOutCleanup() {
+
+        isOnline="false";
+//        writeOnlineStatus(PrefUtil.getEmail(MainActivity.this),PrefUtil.getUsername(MainActivity.this),"afasf",PrefUtil.getUserId(MainActivity.this), isOnline , "false" , "false");
         mUsername = ANONYMOUS;
         mAdapter.clear();
 //        mMessageAdapter.clear();
@@ -302,8 +345,10 @@ public class MainActivity extends AppCompatActivity {
 
                     User friendlyUser = dataSnapshot.getValue(User.class);
 //                    mMessageAdapter.add(friendlyUser);
-                    userList.add(friendlyUser);
-                    mAdapter.notifyDataSetChanged();
+                    if (friendlyUser.getKey()!=PrefUtil.getUserId(MainActivity.this)) {
+                        userList.add(friendlyUser);
+                        mAdapter.notifyDataSetChanged();
+                    }
                 }
 
                 public void onChildChanged(DataSnapshot dataSnapshot, String s) {}
