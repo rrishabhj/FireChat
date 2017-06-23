@@ -108,6 +108,7 @@ public class MainActivity extends AppCompatActivity {
     private UserRecyclerViewAdaptor mAdapter;
     public String USER_ID = "user_id";
     String isOnline="false";
+    private String db_Email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,6 +129,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+//        PrefUtil.clearSharedPreferences(this);
         // Initialize progress bar
         mProgressBar.setVisibility(ProgressBar.INVISIBLE);
 
@@ -184,8 +186,11 @@ public class MainActivity extends AppCompatActivity {
                     onSignedInInitialize(user.getDisplayName());
                 } else {
                     getStoragePermission(MainActivity.this);
-                    // User is signed out
-                    onSignedOutCleanup();
+
+                    if (PrefUtil.getLoginStatus(MainActivity.this)) {
+                        // User is signed out
+                        onSignedOutCleanup();
+                    }
 
                     startActivityForResult(
                             AuthUI.getInstance()
@@ -236,7 +241,7 @@ public class MainActivity extends AppCompatActivity {
                 final User user1=new User(email,name,u_id,key,isOnline,"false","false");
 
 
-                final String db_Email= email.split("@")[0];
+                db_Email = email.split("@")[0];
 
 
                 mUsersDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -273,6 +278,10 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         mFirebaseAuth.addAuthStateListener(mAuthStateListener);
         isOnline = "true";
+
+//        if (PrefUtil.getLoginStatus(MainActivity.this)) {
+//            mUsersDatabaseReference.child(PrefUtil.getEmail(MainActivity.this).split("@")[0] + "/isOnline").setValue("true");
+//        }
 
 //        mUsersDatabaseReference.child(PrefUtil.getUserId(MainActivity.this)).child("isOnline").runTransaction(new Transaction.Handler() {
 //            @Override
@@ -321,13 +330,13 @@ public class MainActivity extends AppCompatActivity {
         detachDatabaseReadListener();
     }
 
-//    @Override
-//    protected void onStop() {
-//        super.onStop();
+    @Override
+    protected void onStop() {
+        super.onStop();
 //        if (PrefUtil.getLoginStatus(MainActivity.this)) {
 //            mUsersDatabaseReference.child(PrefUtil.getEmail(MainActivity.this).split("@")[0] + "/isOnline").setValue("false");
 //        }
-//    }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -349,7 +358,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void onSignedInInitialize(String username) {
         mUsername = username;
-        mUsersDatabaseReference.child(PrefUtil.getEmail(MainActivity.this).split("@")[0]+"/isOnline").setValue("true");
         attachDatabaseReadListener();
     }
 
@@ -359,9 +367,8 @@ public class MainActivity extends AppCompatActivity {
 //        writeOnlineStatus(PrefUtil.getEmail(MainActivity.this),PrefUtil.getUsername(MainActivity.this),"afasf",PrefUtil.getUserId(MainActivity.this), isOnline , "false" , "false");
         mUsername = ANONYMOUS;
 
-        if (PrefUtil.getLoginStatus(MainActivity.this)) {
-            mUsersDatabaseReference.child(PrefUtil.getEmail(MainActivity.this).split("@")[0] + "/isOnline").setValue("false");
-        }
+
+
         mAdapter.clear();
 //        mMessageAdapter.clear();
         PrefUtil.clearSharedPreferences(MainActivity.this);

@@ -2,6 +2,7 @@ package com.google.firebase.udacity.friendlychat;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -59,6 +60,7 @@ public class ChatActiivty extends AppCompatActivity {
     private EditText mMessageEditText;
     private Button mSendButton;
     private TextView tvIsOnline;
+    private TextView tvIsTyping;
 
 
     private FirebaseDatabase mFirebaseDatabase;
@@ -73,6 +75,7 @@ public class ChatActiivty extends AppCompatActivity {
     private MessageRecyclerViewAdaptor mAdapter;
     private String senderUserId;
     private DatabaseReference mUsersDatabaseReference;
+    private DatabaseReference mTypingUsersDatabaseReference;
 
 
     @Override
@@ -93,6 +96,7 @@ public class ChatActiivty extends AppCompatActivity {
         mSendButton = (Button) findViewById(R.id.sendButton);
         recyclerView = (RecyclerView) findViewById(R.id.rv_message);
         tvIsOnline = (TextView) findViewById(R.id.tv_isonline);
+        tvIsTyping = (TextView) findViewById(R.id.tv_isTyping);
 
         // get senders user_id
         senderUserId = getIntent().getStringExtra("user_id");
@@ -102,7 +106,9 @@ public class ChatActiivty extends AppCompatActivity {
 
         mMessagesDatabaseReference = mFirebaseDatabase.getReference().child("messages").child(PrefUtil.getEmail(ChatActiivty.this).split("@")[0]).child(senderUserId).child("chat");
         mChatPhotosStorageReference = mFirebaseStorage.getReference().child("chat_photos");
+
         mUsersDatabaseReference = mFirebaseDatabase.getReference().child("users").child(senderUserId.split("@")[0]).child("isOnline");
+        mTypingUsersDatabaseReference = mFirebaseDatabase.getReference().child("users").child(PrefUtil.getEmail(ChatActiivty.this).split("@")[0]).child("isTyping");
 
         // init rv
         mAdapter = new MessageRecyclerViewAdaptor(messageList);
@@ -114,7 +120,7 @@ public class ChatActiivty extends AppCompatActivity {
 
 
         // isOnline event listner
-        ValueEventListener postListener = new ValueEventListener() {
+        ValueEventListener isOnlinePostListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -134,7 +140,30 @@ public class ChatActiivty extends AppCompatActivity {
             }
         };
 
-        mUsersDatabaseReference.addValueEventListener(postListener);
+        mUsersDatabaseReference.addValueEventListener(isOnlinePostListener);
+
+        // isTyping event listner
+        ValueEventListener isTypingPostListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                String str= (String) dataSnapshot.getValue();
+                if (str.equalsIgnoreCase("true")){
+                    tvIsTyping.setVisibility(View.VISIBLE);
+                }else{
+                    tvIsTyping.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Getting Post failed, log a message
+                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+                // ...
+            }
+        };
+
+        mTypingUsersDatabaseReference.addValueEventListener(isTypingPostListener);
 
 
         // ImagePickerButton shows an image picker to upload a image for a message
@@ -149,8 +178,10 @@ public class ChatActiivty extends AppCompatActivity {
             }
         });
 
+
         // Enable Send button when there's text to send
         mMessageEditText.addTextChangedListener(new TextWatcher() {
+
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             }
@@ -158,14 +189,28 @@ public class ChatActiivty extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (charSequence.toString().trim().length() > 0) {
+                    mTypingUsersDatabaseReference.setValue("true");
                     mSendButton.setEnabled(true);
+
                 } else {
                     mSendButton.setEnabled(false);
                 }
+
             }
+
 
             @Override
             public void afterTextChanged(Editable editable) {
+
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        //Do something after 100ms
+                        mTypingUsersDatabaseReference.setValue("false");
+                    }
+                }, 500);
+
             }
         });
 
