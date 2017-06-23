@@ -41,7 +41,10 @@ import com.google.firebase.udacity.friendlychat.adaptor.UserRecyclerViewAdaptor;
 import com.google.firebase.udacity.friendlychat.model.FriendlyMessage;
 import com.google.firebase.udacity.friendlychat.model.User;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import static com.google.firebase.udacity.friendlychat.MainActivity.getStoragePermission;
@@ -67,15 +70,18 @@ public class ChatActiivty extends AppCompatActivity {
     private FirebaseStorage mFirebaseStorage;
     private FirebaseRemoteConfig mFirebaseRemoteConfig;
     private DatabaseReference mMessagesDatabaseReference;
+    private DatabaseReference mMessagesMessageDatabaseReference;
     private StorageReference mChatPhotosStorageReference;
     private RecyclerView recyclerView;
     private ChildEventListener mChildEventListener;
+    private ChildEventListener mChildChildEventListener;
 
     private List<FriendlyMessage> messageList = new ArrayList<>();
     private MessageRecyclerViewAdaptor mAdapter;
     private String senderUserId;
     private DatabaseReference mUsersDatabaseReference;
     private DatabaseReference mTypingUsersDatabaseReference;
+    private SimpleDateFormat dateString;
 
 
     @Override
@@ -83,6 +89,7 @@ public class ChatActiivty extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_actiivty);
 
+        dateString = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
 
         // Initialize Firebase components
         mFirebaseDatabase = FirebaseDatabase.getInstance();
@@ -104,7 +111,10 @@ public class ChatActiivty extends AppCompatActivity {
 
 //        mMessagesDatabaseReference = mFirebaseDatabase.getReference().child("messages").child(PrefUtil.getUserId(ChatActiivty.this)).child(senderUserId).child("chat");
 
+
         mMessagesDatabaseReference = mFirebaseDatabase.getReference().child("messages").child(PrefUtil.getEmail(ChatActiivty.this).split("@")[0]).child(senderUserId).child("chat");
+        mMessagesMessageDatabaseReference = mFirebaseDatabase.getReference().child("messages").child(senderUserId).child(PrefUtil.getEmail(ChatActiivty.this).split("@")[0]).child("chat");
+
         mChatPhotosStorageReference = mFirebaseStorage.getReference().child("chat_photos");
 
         mUsersDatabaseReference = mFirebaseDatabase.getReference().child("users").child(senderUserId.split("@")[0]).child("isOnline");
@@ -220,7 +230,9 @@ public class ChatActiivty extends AppCompatActivity {
         mSendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FriendlyMessage friendlyMessage = new FriendlyMessage(mMessageEditText.getText().toString(), PrefUtil.getUsername(ChatActiivty.this), null);
+
+                String chatDate = dateString.format(new Date().getTime());
+                FriendlyMessage friendlyMessage = new FriendlyMessage(mMessageEditText.getText().toString(), chatDate, null);
                 mMessagesDatabaseReference.push().setValue(friendlyMessage);
 
                 // Clear input box
@@ -255,6 +267,7 @@ public class ChatActiivty extends AppCompatActivity {
                     // Initialize progress bar
                     mProgressBar.setVisibility(ProgressBar.INVISIBLE);
 
+
                     FriendlyMessage message = dataSnapshot.getValue(FriendlyMessage.class);
 //                    mMessageAdapter.add(friendlyUser);
                     messageList.add(message);
@@ -271,15 +284,55 @@ public class ChatActiivty extends AppCompatActivity {
                 }
             };
             mMessagesDatabaseReference.addChildEventListener(mChildEventListener);
+
+
         }else {
             mProgressBar.setVisibility(ProgressBar.INVISIBLE);
         }
+
+
+        if (mChildChildEventListener== null) {
+            mChildChildEventListener = new ChildEventListener() {
+                @Override
+                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                    // Initialize progress bar
+                    mProgressBar.setVisibility(ProgressBar.INVISIBLE);
+
+
+                    FriendlyMessage message = dataSnapshot.getValue(FriendlyMessage.class);
+//                    mMessageAdapter.add(friendlyUser);
+                    messageList.add(message);
+                    mAdapter.notifyDataSetChanged();
+                }
+
+                public void onChildChanged(DataSnapshot dataSnapshot, String s) {}
+                public void onChildRemoved(DataSnapshot dataSnapshot) {}
+                public void onChildMoved(DataSnapshot dataSnapshot, String s) {}
+                public void onCancelled(DatabaseError databaseError) {
+                    // Initialize progress bar
+                    mProgressBar.setVisibility(ProgressBar.INVISIBLE);
+
+                }
+            };
+            mMessagesMessageDatabaseReference.addChildEventListener(mChildChildEventListener);
+
+
+        }else {
+            mProgressBar.setVisibility(ProgressBar.INVISIBLE);
+        }
+
+        Collections.sort(messageList);
     }
 
+
     private void detachDatabaseReadListener() {
-        if (mChildEventListener != null) {
-            mMessagesDatabaseReference.removeEventListener(mChildEventListener);
-            mChildEventListener = null;
+        if (mChildEventListener != null ) {
+            mMessagesMessageDatabaseReference.removeEventListener(mChildChildEventListener);
+            mChildChildEventListener = null;
+        }
+        if (mChildChildEventListener != null ) {
+            mMessagesMessageDatabaseReference.removeEventListener(mChildChildEventListener);
+            mChildChildEventListener = null;
         }
     }
 

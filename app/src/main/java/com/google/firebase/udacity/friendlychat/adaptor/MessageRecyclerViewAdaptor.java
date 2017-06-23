@@ -78,4 +78,6 @@ public class MessageRecyclerViewAdaptor extends RecyclerView.Adapter<MessageRecy
         messageList.clear();
         notifyDataSetChanged();
     }
+
+
 }

@@ -15,7 +15,7 @@
  */
 package com.google.firebase.udacity.friendlychat.model;
 
-public class FriendlyMessage {
+public class FriendlyMessage implements Comparable<FriendlyMessage> {
 
     private String text;
     private String name;
@@ -52,5 +52,18 @@ public class FriendlyMessage {
 
     public void setPhotoUrl(String photoUrl) {
         this.photoUrl = photoUrl;
+    }
+
+    @Override
+    public int compareTo(FriendlyMessage friendlyMessage) {
+        if (name.compareTo(friendlyMessage.getName())>=1) {
+            return 1;
+        }
+        else if (name.compareTo(friendlyMessage.getName())<=1) {
+            return -1;
+        }
+        else {
+            return 0;
+        }
     }
 }
