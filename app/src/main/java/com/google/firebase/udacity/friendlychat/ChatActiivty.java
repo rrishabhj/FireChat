@@ -64,12 +64,14 @@ public class ChatActiivty extends AppCompatActivity {
     private Button mSendButton;
     private TextView tvIsOnline;
     private TextView tvIsTyping;
+    private TextView tvSeen;
 
 
     private FirebaseDatabase mFirebaseDatabase;
     private FirebaseStorage mFirebaseStorage;
     private FirebaseRemoteConfig mFirebaseRemoteConfig;
     private DatabaseReference mMessagesDatabaseReference;
+    private DatabaseReference mMessagesReceiptDatabaseReference;
     private DatabaseReference mMessagesMessageDatabaseReference;
     private StorageReference mChatPhotosStorageReference;
     private RecyclerView recyclerView;
@@ -82,6 +84,8 @@ public class ChatActiivty extends AppCompatActivity {
     private DatabaseReference mUsersDatabaseReference;
     private DatabaseReference mTypingUsersDatabaseReference;
     private SimpleDateFormat dateString;
+    private ValueEventListener isTypingPostListener;
+    private ValueEventListener isSeeenPostListener;
 
 
     @Override
@@ -104,6 +108,7 @@ public class ChatActiivty extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.rv_message);
         tvIsOnline = (TextView) findViewById(R.id.tv_isonline);
         tvIsTyping = (TextView) findViewById(R.id.tv_isTyping);
+        tvSeen = (TextView) findViewById(R.id.tv_seen);
 
         // get senders user_id
         senderUserId = getIntent().getStringExtra("user_id");
@@ -114,6 +119,7 @@ public class ChatActiivty extends AppCompatActivity {
 
         mMessagesDatabaseReference = mFirebaseDatabase.getReference().child("messages").child(PrefUtil.getEmail(ChatActiivty.this).split("@")[0]).child(senderUserId).child("chat");
         mMessagesMessageDatabaseReference = mFirebaseDatabase.getReference().child("messages").child(senderUserId).child(PrefUtil.getEmail(ChatActiivty.this).split("@")[0]).child("chat");
+        mMessagesReceiptDatabaseReference = mFirebaseDatabase.getReference().child("messages").child(senderUserId).child(PrefUtil.getEmail(ChatActiivty.this).split("@")[0]);
 
         mChatPhotosStorageReference = mFirebaseStorage.getReference().child("chat_photos");
 
@@ -153,7 +159,7 @@ public class ChatActiivty extends AppCompatActivity {
         mUsersDatabaseReference.addValueEventListener(isOnlinePostListener);
 
         // isTyping event listner
-        ValueEventListener isTypingPostListener = new ValueEventListener() {
+        isTypingPostListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -174,6 +180,34 @@ public class ChatActiivty extends AppCompatActivity {
         };
 
         mTypingUsersDatabaseReference.addValueEventListener(isTypingPostListener);
+
+
+        // isSeen event listner
+        isSeeenPostListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                String str= (String) dataSnapshot.getValue();
+                if(str!=null) {
+                    if (str.equalsIgnoreCase("true")) {
+                        tvSeen.setVisibility(View.VISIBLE);
+                    } else {
+                        tvSeen.setVisibility(View.GONE);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Getting Post failed, log a message
+                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+                // ...
+            }
+        };
+
+        mMessagesReceiptDatabaseReference.child("isReceipt").addValueEventListener(isSeeenPostListener);
+
+
 
 
         // ImagePickerButton shows an image picker to upload a image for a message
@@ -234,7 +268,7 @@ public class ChatActiivty extends AppCompatActivity {
                 String chatDate = dateString.format(new Date().getTime());
                 FriendlyMessage friendlyMessage = new FriendlyMessage(mMessageEditText.getText().toString(), chatDate, null);
                 mMessagesDatabaseReference.push().setValue(friendlyMessage);
-
+                mMessagesReceiptDatabaseReference.child("isReceipt").setValue("false");
                 // Clear input box
                 mMessageEditText.setText("");
             }
@@ -286,6 +320,7 @@ public class ChatActiivty extends AppCompatActivity {
             mMessagesDatabaseReference.addChildEventListener(mChildEventListener);
 
 
+
         }else {
             mProgressBar.setVisibility(ProgressBar.INVISIBLE);
         }
@@ -302,6 +337,7 @@ public class ChatActiivty extends AppCompatActivity {
                     FriendlyMessage message = dataSnapshot.getValue(FriendlyMessage.class);
 //                    mMessageAdapter.add(friendlyUser);
                     messageList.add(message);
+                    mMessagesReceiptDatabaseReference.child("isReceipt").setValue("true");
                     mAdapter.notifyDataSetChanged();
                 }
 
@@ -334,6 +370,15 @@ public class ChatActiivty extends AppCompatActivity {
             mMessagesMessageDatabaseReference.removeEventListener(mChildChildEventListener);
             mChildChildEventListener = null;
         }
+        if (isTypingPostListener != null ) {
+            mTypingUsersDatabaseReference.removeEventListener(isTypingPostListener);
+            isTypingPostListener = null;
+        }
+        if (isSeeenPostListener != null ) {
+            mMessagesReceiptDatabaseReference.removeEventListener(isSeeenPostListener);
+            isSeeenPostListener = null;
+        }
+
     }
 
     // Fetch the config to determine the allowed length of messages.
