@@ -7,6 +7,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.google.firebase.udacity.friendlychat.MainActivity;
+import com.google.firebase.udacity.friendlychat.tabs.ChatFragment;
 
 /**
  * Created by DMI on 20-06-2017.
@@ -15,9 +16,9 @@ import com.google.firebase.udacity.friendlychat.MainActivity;
 public class UserRecyclerViewListener implements RecyclerView.OnItemTouchListener {
 
     private GestureDetector gestureDetector;
-    public MainActivity.ClickListener clickListener;
+    public ChatFragment.ClickListener clickListener;
 
-    public UserRecyclerViewListener(Context context, final RecyclerView recyclerView, final MainActivity.ClickListener clickListener) {
+    public UserRecyclerViewListener(Context context, final RecyclerView recyclerView, final  ChatFragment.ClickListener clickListener) {
         this.clickListener = clickListener;
         gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
 
@@ -55,11 +56,11 @@ public class UserRecyclerViewListener implements RecyclerView.OnItemTouchListene
 
     }
 
-    public MainActivity.ClickListener getClickListener() {
+    public ChatFragment.ClickListener getClickListener() {
         return clickListener;
     }
 
-    public void setClickListener(MainActivity.ClickListener clickListener) {
+    public void setClickListener(ChatFragment.ClickListener clickListener) {
         this.clickListener = clickListener;
     }
 }

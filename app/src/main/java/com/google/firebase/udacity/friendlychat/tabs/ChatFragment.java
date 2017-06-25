@@ -128,14 +128,14 @@ public class ChatFragment extends Fragment {
 
 		//Init RecyclerView
 		mAdapter = new UserRecyclerViewAdaptor(userList);
-		RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+		RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
 		recyclerView.setLayoutManager(mLayoutManager);
 		recyclerView.setItemAnimator(new DefaultItemAnimator());
 		recyclerView.setAdapter(mAdapter);
 
 
 		// onTouchCLick Listener
-		recyclerView.addOnItemTouchListener(new UserRecyclerViewListener(getApplicationContext(), recyclerView, new MainActivity.ClickListener() {
+		recyclerView.addOnItemTouchListener(new UserRecyclerViewListener(getContext(), recyclerView, new ChatFragment.ClickListener() {
 			@Override
 			public void onClick(View view, int position) {
 

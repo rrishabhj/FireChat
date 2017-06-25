@@ -66,6 +66,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.google.firebase.udacity.friendlychat.Utils.PrefUtil;
 //import com.google.firebase.udacity.friendlychat.adaptor.UserAdaptor;
+import com.google.firebase.udacity.friendlychat.Utils.Utilities;
 import com.google.firebase.udacity.friendlychat.adaptor.TabsPagerAdapter;
 import com.google.firebase.udacity.friendlychat.adaptor.UserRecyclerViewAdaptor;
 import com.google.firebase.udacity.friendlychat.adaptor.UserRecyclerViewListener;
@@ -90,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Utilities.getStoragePermission(MainActivity.this);
         initNavDrawerToggel();
 
     }
@@ -100,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         //toolbar.setTitle("InstaGrabber");
 
+        toolbar.setTitle("FireChat");
         mCollapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsingToolbarLayoutAndroidExample);
         mCollapsingToolbarLayout.setTitle("FireChat");
 
