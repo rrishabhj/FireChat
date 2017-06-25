@@ -44,7 +44,7 @@ import com.google.firebase.udacity.friendlychat.model.User;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.google.firebase.udacity.friendlychat.MainActivity.getStoragePermission;
+import static com.google.firebase.udacity.friendlychat.Utils.Utilities.getStoragePermission;
 
 public class ChatActiivty extends AppCompatActivity {
     public static final int RC_SIGN_IN = 1;
