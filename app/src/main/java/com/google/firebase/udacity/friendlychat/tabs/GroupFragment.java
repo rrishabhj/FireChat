@@ -82,7 +82,7 @@ public class GroupFragment extends Fragment {
 		mSendButton = (Button) rootView.findViewById(R.id.sendButton);
 
 		// init rv
-		mAdapter = new MessageRecyclerViewAdaptor(messageList);
+		mAdapter = new MessageRecyclerViewAdaptor(messageList, getContext());
 		RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
 		recyclerView.setLayoutManager(mLayoutManager);
 		recyclerView.setItemAnimator(new DefaultItemAnimator());

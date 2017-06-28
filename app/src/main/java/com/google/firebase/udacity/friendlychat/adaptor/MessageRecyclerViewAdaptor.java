@@ -1,10 +1,13 @@
 package com.google.firebase.udacity.friendlychat.adaptor;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -21,22 +24,28 @@ import java.util.List;
 public class MessageRecyclerViewAdaptor extends RecyclerView.Adapter<MessageRecyclerViewAdaptor.MyViewHolder> {
 
     private List<FriendlyMessage> messageList;
+    private Context context;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView username;
         public ImageView photoImageView;
+        private LinearLayout llChatBubble;
 
         public MyViewHolder(View view) {
             super(view);
             username = (TextView) view.findViewById(R.id.messageTextView);
             photoImageView = (ImageView) view.findViewById(R.id.photoImageView);
+            llChatBubble = (LinearLayout) view.findViewById(R.id.ll_chat_bubble);
         }
     }
 
 
-    public  MessageRecyclerViewAdaptor (List<FriendlyMessage> messageList) {
+    public  MessageRecyclerViewAdaptor (List<FriendlyMessage> messageList, Context context) {
         this.messageList = messageList;
+        this.context = context;
     }
+
+
 
     @Override
     public MessageRecyclerViewAdaptor.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -55,6 +64,8 @@ public class MessageRecyclerViewAdaptor extends RecyclerView.Adapter<MessageRecy
 
         boolean isPhoto = message.getPhotoUrl() != null;
 
+        String chat = message.getText().split("@")[1];
+        String user = message.getText().split("@")[0];
 
         if (isPhoto) {
             holder.username.setVisibility(View.GONE);
@@ -66,6 +77,15 @@ public class MessageRecyclerViewAdaptor extends RecyclerView.Adapter<MessageRecy
             holder.username.setVisibility(View.VISIBLE);
             holder.photoImageView.setVisibility(View.GONE);
             holder.username.setText(message.getText());
+
+            if (user.equalsIgnoreCase("sender")){
+                    holder.llChatBubble.setBackground( context.getResources().getDrawable(R.drawable.bubble_in));
+                    holder.llChatBubble.setGravity(Gravity.RIGHT);
+            }else{
+                holder.llChatBubble.setBackground( context.getResources().getDrawable(R.drawable.bubble_out));
+                holder.llChatBubble.setGravity(Gravity.LEFT);
+
+            }
         }
     }
 

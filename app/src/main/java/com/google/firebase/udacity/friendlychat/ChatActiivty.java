@@ -147,7 +147,7 @@ public class ChatActiivty extends AppCompatActivity {
         mTypingUsersDatabaseListnerReference = mFirebaseDatabase.getReference().child("users").child(senderUserId).child("isTyping");
 
         // init rv
-        mAdapter = new MessageRecyclerViewAdaptor(messageList);
+        mAdapter = new MessageRecyclerViewAdaptor(messageList,ChatActiivty.this);
         mLayoutManager = new LinearLayoutManager(ChatActiivty.this);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -351,6 +351,7 @@ public class ChatActiivty extends AppCompatActivity {
 
                     FriendlyMessage message = dataSnapshot.getValue(FriendlyMessage.class);
 //                    mMessageAdapter.add(friendlyUser);
+                    message.setText("sender@"+message.getText());
                     messageList.add(message);
                     mAdapter.notifyDataSetChanged();
                 }
@@ -383,8 +384,10 @@ public class ChatActiivty extends AppCompatActivity {
 
                     FriendlyMessage message = dataSnapshot.getValue(FriendlyMessage.class);
 //                    mMessageAdapter.add(friendlyUser);
+                    message.setText("receiver@"+message.getText());
                     messageList.add(message);
                     mMessagesReceiptDatabaseReference.child("isReceipt").setValue("true");
+                    Collections.sort(messageList);
                     mAdapter.notifyDataSetChanged();
                 }
 
@@ -404,7 +407,7 @@ public class ChatActiivty extends AppCompatActivity {
             mProgressBar.setVisibility(ProgressBar.INVISIBLE);
         }
 
-        Collections.sort(messageList);
+
     }
 
 
