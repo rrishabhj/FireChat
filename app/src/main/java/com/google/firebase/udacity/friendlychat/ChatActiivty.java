@@ -4,15 +4,19 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TabLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -47,7 +51,9 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import static com.google.firebase.udacity.friendlychat.MainActivity.getStoragePermission;
+import de.hdodenhof.circleimageview.CircleImageView;
+
+import static com.google.firebase.udacity.friendlychat.Utils.Utilities.getStoragePermission;
 
 public class ChatActiivty extends AppCompatActivity {
     public static final int RC_SIGN_IN = 1;
@@ -83,15 +89,25 @@ public class ChatActiivty extends AppCompatActivity {
     private String senderUserId;
     private DatabaseReference mUsersDatabaseReference;
     private DatabaseReference mTypingUsersDatabaseReference;
+    private DatabaseReference mTypingUsersDatabaseListnerReference;
     private SimpleDateFormat dateString;
     private ValueEventListener isTypingPostListener;
     private ValueEventListener isSeeenPostListener;
+    private TabLayout tabLayout;
+    private Toolbar toolbar;
+    private CircleImageView appbarDP;
+    private TextView appbarName;
+    private ActionBar actionBar;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_actiivty);
+
+
+        //init  ActionBar
+        initAppBar();
 
         dateString = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
 
@@ -106,9 +122,7 @@ public class ChatActiivty extends AppCompatActivity {
         mMessageEditText = (EditText) findViewById(R.id.messageEditText);
         mSendButton = (Button) findViewById(R.id.sendButton);
         recyclerView = (RecyclerView) findViewById(R.id.rv_message);
-        tvIsOnline = (TextView) findViewById(R.id.tv_isonline);
-        tvIsTyping = (TextView) findViewById(R.id.tv_isTyping);
-        tvSeen = (TextView) findViewById(R.id.tv_seen);
+
 
         // get senders user_id
         senderUserId = getIntent().getStringExtra("user_id");
@@ -119,12 +133,14 @@ public class ChatActiivty extends AppCompatActivity {
 
         mMessagesDatabaseReference = mFirebaseDatabase.getReference().child("messages").child(PrefUtil.getEmail(ChatActiivty.this).split("@")[0]).child(senderUserId).child("chat");
         mMessagesMessageDatabaseReference = mFirebaseDatabase.getReference().child("messages").child(senderUserId).child(PrefUtil.getEmail(ChatActiivty.this).split("@")[0]).child("chat");
+
         mMessagesReceiptDatabaseReference = mFirebaseDatabase.getReference().child("messages").child(senderUserId).child(PrefUtil.getEmail(ChatActiivty.this).split("@")[0]);
 
         mChatPhotosStorageReference = mFirebaseStorage.getReference().child("chat_photos");
 
         mUsersDatabaseReference = mFirebaseDatabase.getReference().child("users").child(senderUserId.split("@")[0]).child("isOnline");
         mTypingUsersDatabaseReference = mFirebaseDatabase.getReference().child("users").child(PrefUtil.getEmail(ChatActiivty.this).split("@")[0]).child("isTyping");
+        mTypingUsersDatabaseListnerReference = mFirebaseDatabase.getReference().child("users").child(senderUserId).child("isTyping");
 
         // init rv
         mAdapter = new MessageRecyclerViewAdaptor(messageList);
@@ -156,7 +172,7 @@ public class ChatActiivty extends AppCompatActivity {
             }
         };
 
-        mUsersDatabaseReference.addValueEventListener(isOnlinePostListener);
+//        mUsersDatabaseReference.addValueEventListener(isOnlinePostListener);
 
         // isTyping event listner
         isTypingPostListener = new ValueEventListener() {
@@ -179,9 +195,10 @@ public class ChatActiivty extends AppCompatActivity {
             }
         };
 
-        mTypingUsersDatabaseReference.addValueEventListener(isTypingPostListener);
+        mTypingUsersDatabaseListnerReference.addValueEventListener(isTypingPostListener);
 
 
+        //todo improve logic this is not working
         // isSeen event listner
         isSeeenPostListener = new ValueEventListener() {
             @Override
@@ -273,6 +290,27 @@ public class ChatActiivty extends AppCompatActivity {
                 mMessageEditText.setText("");
             }
         });
+
+    }
+
+    private void initAppBar() {
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+
+        tvIsOnline = (TextView) findViewById(R.id.appbar_online);
+        tvIsTyping = (TextView) findViewById(R.id.appbar_istyping);
+        tvSeen = (TextView) findViewById(R.id.tv_seen);
+        appbarName = (TextView) findViewById(R.id.appbar_name);
+
+        appbarDP = (CircleImageView)findViewById(R.id.appbar_dp);
+
+
+        String name = getIntent().getStringExtra("user_name");
+
+        appbarName.setText(name);
+        //toolbar.setTitle("InstaGrabber");
 
     }
 
@@ -371,9 +409,10 @@ public class ChatActiivty extends AppCompatActivity {
             mChildChildEventListener = null;
         }
         if (isTypingPostListener != null ) {
-            mTypingUsersDatabaseReference.removeEventListener(isTypingPostListener);
+            mTypingUsersDatabaseListnerReference.removeEventListener(isTypingPostListener);
             isTypingPostListener = null;
         }
+
         if (isSeeenPostListener != null ) {
             mMessagesReceiptDatabaseReference.removeEventListener(isSeeenPostListener);
             isSeeenPostListener = null;
