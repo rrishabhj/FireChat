@@ -13,7 +13,7 @@
       android:id="@+id/iv_profile"
       android:layout_width="62dp"
       android:layout_height="62dp"
-      android:src="@drawable/ic_profile"
+      android:src="@mipmap/ic_profilee"
       android:layout_marginLeft="16dp"
       android:layout_below="@+id/tvLogo"
       android:scaleType="centerCrop"

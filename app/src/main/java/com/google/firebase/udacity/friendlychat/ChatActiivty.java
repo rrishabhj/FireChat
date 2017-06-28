@@ -98,6 +98,8 @@ public class ChatActiivty extends AppCompatActivity {
     private CircleImageView appbarDP;
     private TextView appbarName;
     private ActionBar actionBar;
+    private DatabaseReference mUsersDatabaseListnerReference;
+    private LinearLayoutManager mLayoutManager;
 
 
     @Override
@@ -138,13 +140,15 @@ public class ChatActiivty extends AppCompatActivity {
 
         mChatPhotosStorageReference = mFirebaseStorage.getReference().child("chat_photos");
 
-        mUsersDatabaseReference = mFirebaseDatabase.getReference().child("users").child(senderUserId.split("@")[0]).child("isOnline");
+        mUsersDatabaseReference = mFirebaseDatabase.getReference().child("users").child(PrefUtil.getEmail(ChatActiivty.this).split("@")[0]).child("isOnline");
+        mUsersDatabaseListnerReference = mFirebaseDatabase.getReference().child("users").child(senderUserId).child("isOnline");
+
         mTypingUsersDatabaseReference = mFirebaseDatabase.getReference().child("users").child(PrefUtil.getEmail(ChatActiivty.this).split("@")[0]).child("isTyping");
         mTypingUsersDatabaseListnerReference = mFirebaseDatabase.getReference().child("users").child(senderUserId).child("isTyping");
 
         // init rv
         mAdapter = new MessageRecyclerViewAdaptor(messageList);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+        mLayoutManager = new LinearLayoutManager(ChatActiivty.this);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
@@ -172,7 +176,7 @@ public class ChatActiivty extends AppCompatActivity {
             }
         };
 
-//        mUsersDatabaseReference.addValueEventListener(isOnlinePostListener);
+        mUsersDatabaseListnerReference.addValueEventListener(isOnlinePostListener);
 
         // isTyping event listner
         isTypingPostListener = new ValueEventListener() {
@@ -286,6 +290,9 @@ public class ChatActiivty extends AppCompatActivity {
                 FriendlyMessage friendlyMessage = new FriendlyMessage(mMessageEditText.getText().toString(), chatDate, null);
                 mMessagesDatabaseReference.push().setValue(friendlyMessage);
                 mMessagesReceiptDatabaseReference.child("isReceipt").setValue("false");
+
+                mLayoutManager.scrollToPosition(messageList.size() - 1);
+
                 // Clear input box
                 mMessageEditText.setText("");
             }
@@ -317,6 +324,7 @@ public class ChatActiivty extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        mUsersDatabaseReference.setValue("true");
         attachDatabaseReadListener();
     }
 
@@ -324,6 +332,7 @@ public class ChatActiivty extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         mAdapter.clear();
+        mUsersDatabaseReference.setValue("false");
 //        mMessageAdapter.clear();
         detachDatabaseReadListener();
     }
