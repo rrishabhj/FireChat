@@ -29,11 +29,12 @@ public class UserRecyclerViewAdaptor extends RecyclerView.Adapter<UserRecyclerVi
     private List<User> userList;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView username;
+        public TextView username,tvEmail;
 
         public MyViewHolder(View view) {
             super(view);
             username = (TextView) view.findViewById(R.id.userTextView);
+            tvEmail = (TextView) view.findViewById(R.id.tv_email);
         }
     }
 
@@ -54,6 +55,7 @@ public class UserRecyclerViewAdaptor extends RecyclerView.Adapter<UserRecyclerVi
     public void onBindViewHolder(MyViewHolder holder, int position) {
         User user= userList.get(position);
         holder.username.setText(user.getName());
+        holder.tvEmail.setText(user.getEmail());
     }
 
     @Override

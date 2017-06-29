@@ -1,6 +1,7 @@
 package com.google.firebase.udacity.friendlychat.adaptor;
 
 import android.content.Context;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.udacity.friendlychat.R;
+import com.google.firebase.udacity.friendlychat.Utils.PrefUtil;
 import com.google.firebase.udacity.friendlychat.model.FriendlyMessage;
 import com.google.firebase.udacity.friendlychat.model.User;
 
@@ -64,28 +66,41 @@ public class MessageRecyclerViewAdaptor extends RecyclerView.Adapter<MessageRecy
 
         boolean isPhoto = message.getPhotoUrl() != null;
 
-        String chat = message.getText().split("@")[1];
-        String user = message.getText().split("@")[0];
 
-        if (isPhoto) {
-            holder.username.setVisibility(View.GONE);
-            holder.photoImageView.setVisibility(View.VISIBLE);
-            Glide.with(holder.photoImageView.getContext())
-                    .load(message.getPhotoUrl())
-                    .into(holder.photoImageView);
-        } else {
-            holder.username.setVisibility(View.VISIBLE);
-            holder.photoImageView.setVisibility(View.GONE);
-            holder.username.setText(message.getText());
+        if (message!=null) {
+            String chat = message.getText().split("@")[1];
+            String user = message.getText().split("@")[0];
 
-            if (user.equalsIgnoreCase("sender")){
-                    holder.llChatBubble.setBackground( context.getResources().getDrawable(R.drawable.bubble_in));
-                    holder.llChatBubble.setGravity(Gravity.RIGHT);
-            }else{
-                holder.llChatBubble.setBackground( context.getResources().getDrawable(R.drawable.bubble_out));
-                holder.llChatBubble.setGravity(Gravity.LEFT);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                    LinearLayoutCompat.LayoutParams.WRAP_CONTENT, LinearLayoutCompat.LayoutParams.WRAP_CONTENT);
 
+
+            if (isPhoto) {
+                holder.username.setVisibility(View.GONE);
+                holder.photoImageView.setVisibility(View.VISIBLE);
+                Glide.with(holder.photoImageView.getContext())
+                        .load(message.getPhotoUrl())
+                        .into(holder.photoImageView);
+            } else {
+                holder.username.setVisibility(View.VISIBLE);
+                holder.photoImageView.setVisibility(View.GONE);
+                holder.username.setText(chat);
+
+                if (user.equalsIgnoreCase("sender")) {
+                    holder.llChatBubble.setBackground(context.getResources().getDrawable(R.drawable.bubble_in));
+                    params.gravity = Gravity.RIGHT;
+                } else if (user.equalsIgnoreCase("receiver")){
+                    holder.llChatBubble.setBackground(context.getResources().getDrawable(R.drawable.bubble_out));
+                    params.gravity = Gravity.LEFT;
+                } else if (PrefUtil.getUsername(context).equalsIgnoreCase(user)){
+                    holder.llChatBubble.setBackground(context.getResources().getDrawable(R.drawable.bubble_in));
+                    params.gravity = Gravity.RIGHT;
+                }else{
+                    holder.llChatBubble.setBackground(context.getResources().getDrawable(R.drawable.bubble_out));
+                    params.gravity = Gravity.LEFT;
+                }
             }
+            holder.llChatBubble.setLayoutParams(params);
         }
     }
 

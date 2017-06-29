@@ -195,6 +195,8 @@ public class GroupFragment extends Fragment {
 				@Override
 				public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 					FriendlyMessage friendlyMessage = dataSnapshot.getValue(FriendlyMessage.class);
+
+					friendlyMessage.setText(PrefUtil.getUsername(getContext())+"@"+friendlyMessage.getText());
 					messageList.add(friendlyMessage);
 				}
 
