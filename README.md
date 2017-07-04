@@ -29,7 +29,7 @@ Setup requires creating a Firebase project. See https://firebase.google.com/ for
 
 ## Screenshots
 
-![Image](https://github.com/rrishabhj/FireChat/blob/master/ScreenShot/img1.jpeg.jpeg)
+![Image](https://github.com/rrishabhj/FireChat/blob/master/ScreenShot/img1.jpeg)
 
 
 ![Image](https://github.com/rrishabhj/FireChat/blob/master/ScreenShot/img2.jpeg)
