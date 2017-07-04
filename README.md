@@ -29,11 +29,8 @@ Setup requires creating a Firebase project. See https://firebase.google.com/ for
 
 ## Screenshots
 
-![Image](https://github.com/rrishabhj/FireChat/blob/master/ScreenSho/WhatsApp%20Image%202017-07-04%20at%2023.24.40(2).jpeg)
+![Image](https://github.com/rrishabhj/FireChat/blob/master/ScreenShot/img1.jpeg.jpeg)
 
 
-![Image](https://github.com/rrishabhj/FireChat/blob/master/ScreenSho/WhatsApp%20Image%202017-07-04%20at%2023.24.40(1).jpeg)
-
-
-![Image](https://github.com/rrishabhj/FireChat/blob/master/ScreenShot/WhatsApp%20Image%202017-07-04%20at%2023.24.40.jpeg)
+![Image](https://github.com/rrishabhj/FireChat/blob/master/ScreenShot/img2.jpeg)
 
