@@ -155,6 +155,11 @@ public class ChatActiivty extends AppCompatActivity {
 
 
 
+        // don't show progressbar in chat
+        mProgressBar.setVisibility(View.GONE);
+
+
+
         // isOnline event listner
         ValueEventListener isOnlinePostListener = new ValueEventListener() {
             @Override
@@ -291,7 +296,9 @@ public class ChatActiivty extends AppCompatActivity {
                 mMessagesDatabaseReference.push().setValue(friendlyMessage);
                 mMessagesReceiptDatabaseReference.child("isReceipt").setValue("false");
 
-                mLayoutManager.scrollToPosition(messageList.size());
+                mLayoutManager.scrollToPosition(messageList.size() - 1);
+
+                recyclerView.smoothScrollToPosition(messageList.size());
 
                 // Clear input box
                 mMessageEditText.setText("");
@@ -354,7 +361,14 @@ public class ChatActiivty extends AppCompatActivity {
                     message.setText("sender@"+message.getText());
                     messageList.add(message);
                     Collections.sort(messageList);
+
+                    if (messageList.size()!=0) {
+                        mLayoutManager.scrollToPosition(messageList.size() - 1);
+                        recyclerView.smoothScrollToPosition(messageList.size());
+                    }
+
                     mAdapter.notifyDataSetChanged();
+
                 }
 
                 public void onChildChanged(DataSnapshot dataSnapshot, String s) {}
@@ -389,6 +403,12 @@ public class ChatActiivty extends AppCompatActivity {
                     messageList.add(message);
                     mMessagesReceiptDatabaseReference.child("isReceipt").setValue("true");
                     Collections.sort(messageList);
+
+                    if (messageList.size()!=0) {
+                        mLayoutManager.scrollToPosition(messageList.size() - 1);
+                        recyclerView.smoothScrollToPosition(messageList.size());
+                    }
+
                     mAdapter.notifyDataSetChanged();
                 }
 
