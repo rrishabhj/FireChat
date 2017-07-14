@@ -286,12 +286,12 @@ public class ChatActiivty extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                String chatDate = dateString.format(new Date().getTime());
+                String chatDate = String.valueOf(System.currentTimeMillis());
                 FriendlyMessage friendlyMessage = new FriendlyMessage(mMessageEditText.getText().toString(), chatDate, null);
                 mMessagesDatabaseReference.push().setValue(friendlyMessage);
                 mMessagesReceiptDatabaseReference.child("isReceipt").setValue("false");
 
-                mLayoutManager.scrollToPosition(messageList.size() - 1);
+                mLayoutManager.scrollToPosition(messageList.size());
 
                 // Clear input box
                 mMessageEditText.setText("");
@@ -353,6 +353,7 @@ public class ChatActiivty extends AppCompatActivity {
 //                    mMessageAdapter.add(friendlyUser);
                     message.setText("sender@"+message.getText());
                     messageList.add(message);
+                    Collections.sort(messageList);
                     mAdapter.notifyDataSetChanged();
                 }
 
