@@ -1,0 +1,176 @@
+<android.support.design.widget.CoordinatorLayout
+    android:id="@+id/rootLayout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="66dp"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+            <!--<LinearLayout-->
+                <!--android:orientation="horizontal"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:gravity="left"-->
+                <!--android:layout_height="match_parent">-->
+
+                <!--<de.hdodenhof.circleimageview.CircleImageView-->
+                    <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+                    <!--android:id="@+id/appbar_dp"-->
+                    <!--android:layout_width="42dp"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:src="@mipmap/ic_profilee"-->
+                    <!--android:scaleType="centerCrop"-->
+                    <!--app:civ_border_width="1dp"-->
+                    <!--app:civ_border_color="#000000"/>-->
+
+
+
+
+                <!--<LinearLayout-->
+                    <!--android:orientation="vertical"-->
+                    <!--android:layout_marginLeft="12dp"-->
+                    <!--android:layout_weight="5"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="match_parent">-->
+
+                    <!--<TextView-->
+                        <!--android:id="@+id/appbar_name"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:text="Rishabh"-->
+
+                        <!--android:textColor="#ffffff"-->
+                        <!--android:textStyle="bold"-->
+                        <!--android:textAppearance="@style/TextAppearance.AppCompat.Medium"-->
+                        <!--android:layout_marginTop="6dp" />-->
+
+
+                    <!--<TextView-->
+                        <!--android:id="@+id/appbar_online"-->
+                        <!--android:text="Online"-->
+                        <!--android:visibility="gone"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:textColor="#ffffff" />-->
+
+                    <!--<TextView-->
+                        <!--android:id="@+id/appbar_istyping"-->
+                        <!--android:text="...typing"-->
+                        <!--android:visibility="gone"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:textColor="#ffffff" />-->
+
+                <!--</LinearLayout>-->
+
+                <!--<ImageView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--app:srcCompat="@drawable/ic_setting"-->
+                    <!--android:id="@+id/imageView"-->
+                    <!--android:layout_gravity="center"-->
+                    <!--android:layout_weight="1"/>-->
+            <!--</LinearLayout>-->
+        </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+        android:layout_marginTop="66dp"
+        android:background="#f3f3f3">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/appbar_dp"
+        android:layout_width="124dp"
+        android:layout_height="124dp"
+            android:layout_marginTop="56dp"
+        android:src="@mipmap/ic_profilee"
+        android:scaleType="centerCrop"
+        app:civ_border_width="1dp"
+        app:civ_border_color="#000000"
+            android:layout_gravity="center" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:text="Rishabh Jindal"
+            android:textColor="#000000"
+            android:id="@+id/et_name"
+            android:layout_marginTop="14dp"
+            android:background="#ffffff"
+            android:minHeight="43dp"
+            android:padding="12dp"
+            android:enabled="false" />
+
+        <TextView
+            android:text="This name will be displayed to all your contacts."
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView"
+            android:minHeight="43dp"
+            android:gravity="left|center"
+            android:paddingLeft="12dp" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="44dp"
+            android:background="#ffffff"
+            android:padding="12dp"
+            android:weightSum="1">
+
+            <TextView
+                android:text="About and phone number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView2"
+                android:textColor="@color/colorPrimary" />
+
+            <TextView
+                android:text="Hey I'm using Firechat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_status"
+                android:minHeight="43dp"
+                android:gravity="left|center"
+                android:layout_weight="0.30"
+                android:textColor="#000000"
+                android:onClick="changeStatus" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@android:color/darker_gray"/>
+
+            <TextView
+                android:text="rishabhjindal4@gmail.com"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_email"
+                android:minHeight="43dp"
+                android:gravity="left|center"
+                android:layout_weight="0.30"
+                android:textColor="#000000" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+
+</android.support.design.widget.CoordinatorLayout>

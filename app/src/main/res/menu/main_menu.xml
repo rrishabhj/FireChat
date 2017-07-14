@@ -10,4 +10,10 @@
         android:id="@+id/share_menu"
         android:title="Share"
         app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/profile_menu"
+        android:title="Profile"
+        app:showAsAction="never"/>
+
 </menu>

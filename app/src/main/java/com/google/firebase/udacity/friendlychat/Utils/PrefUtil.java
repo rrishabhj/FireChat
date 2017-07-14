@@ -17,6 +17,7 @@ public class PrefUtil {
     public static final String USER_ID = "USER_ID";
     public static final String USER_NAME = "USER_NAME";
     public static final String USER_EMAIL = "USER_EMAIL";
+    public static final String USER_STATUS = "USER_STATUS";
 
     /*write data to all shared preference using single method*/
     public static void saveLoginDetails(Context context, String userId, String email, String username) {
@@ -24,6 +25,17 @@ public class PrefUtil {
         setUsername(context, username);
         setUserId(context, userId);
         setEmail(context, email);
+    }
+
+    public static String getStatus(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        String restoredText = prefs.getString(USER_STATUS, "Hey There I'm Using Firechat");
+        return restoredText;
+    }
+
+    public static void setStatus(Context context, String data) {
+        SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        prefs.putString(USER_STATUS, data).commit();
     }
 
     /*get the above fields directly*/

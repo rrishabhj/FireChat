@@ -220,7 +220,7 @@ public class ChatFragment extends Fragment {
 
 				// save in firebase db
 				final String key = mUsersDatabaseReference.push().getKey();
-				final User user1=new User(email,name,u_id,key,isOnline,"false","false");
+				final User user1=new User(email,name,u_id,key,isOnline,"false","Hey I'm Using Firechat");
 
 
 				db_Email = email.split("@")[0];
@@ -246,6 +246,9 @@ public class ChatFragment extends Fragment {
 
 				//save in sharedpref
 				PrefUtil.saveLoginDetails(getContext(),key,email,name);
+
+				//isreceipt is used as status
+				PrefUtil.setStatus(getContext(),user1.getIsReceipt());
 
 			} else if (resultCode == RESULT_CANCELED) {
 				// Sign in was canceled by the user, finish the activity
@@ -337,7 +340,8 @@ public class ChatFragment extends Fragment {
 
 					User friendlyUser = dataSnapshot.getValue(User.class);
 					//                    mMessageAdapter.add(friendlyUser);
-					if (friendlyUser.getEmail().split("@")[0]!=PrefUtil.getEmail(getContext()).split("@")[0]) {
+
+					if (!(friendlyUser.getEmail().split("@")[0].equals(PrefUtil.getEmail(getContext()).split("@")[0] ))){
 						userList.add(friendlyUser);
 						mAdapter.notifyDataSetChanged();
 					}
@@ -352,7 +356,8 @@ public class ChatFragment extends Fragment {
 
 				}
 			};
-			mUsersDatabaseReference.addChildEventListener(mChildEventListener);
+			mUsersDatabaseReference.orderByValue().limitToLast(100).addChildEventListener(mChildEventListener);
+			mUsersDatabaseReference.keepSynced(true);
 		}
 	}
 

@@ -27,15 +27,23 @@ public class MessageRecyclerViewAdaptor extends RecyclerView.Adapter<MessageRecy
 
     private List<FriendlyMessage> messageList;
     private Context context;
+    boolean type = false;
+
+    public MessageRecyclerViewAdaptor(List<FriendlyMessage> messageList, Context context, boolean type) {
+        this.messageList = messageList;
+        this.context = context;
+        this.type = type;
+    }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView username;
+        public TextView username, realUsername;
         public ImageView photoImageView;
         private LinearLayout llChatBubble;
 
         public MyViewHolder(View view) {
             super(view);
             username = (TextView) view.findViewById(R.id.messageTextView);
+            realUsername = (TextView) view.findViewById(R.id.usernameTextView);
             photoImageView = (ImageView) view.findViewById(R.id.photoImageView);
             llChatBubble = (LinearLayout) view.findViewById(R.id.ll_chat_bubble);
         }
@@ -67,9 +75,16 @@ public class MessageRecyclerViewAdaptor extends RecyclerView.Adapter<MessageRecy
         boolean isPhoto = message.getPhotoUrl() != null;
 
 
+
+
         if (message!=null) {
             String chat = message.getText().split("@")[1];
             String user = message.getText().split("@")[0];
+
+            if (type){
+                holder.realUsername.setVisibility(View.VISIBLE);
+                holder.realUsername.setText(message.getName());
+            }
 
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                     LinearLayoutCompat.LayoutParams.WRAP_CONTENT, LinearLayoutCompat.LayoutParams.WRAP_CONTENT);
@@ -86,15 +101,12 @@ public class MessageRecyclerViewAdaptor extends RecyclerView.Adapter<MessageRecy
                 holder.photoImageView.setVisibility(View.GONE);
                 holder.username.setText(chat);
 
-                if (user.equalsIgnoreCase("sender")) {
+                if (user.equalsIgnoreCase("sender")|| PrefUtil.getUsername(context).equalsIgnoreCase(user)) {
                     holder.llChatBubble.setBackground(context.getResources().getDrawable(R.drawable.bubble_in));
                     params.gravity = Gravity.RIGHT;
                 } else if (user.equalsIgnoreCase("receiver")){
                     holder.llChatBubble.setBackground(context.getResources().getDrawable(R.drawable.bubble_out));
                     params.gravity = Gravity.LEFT;
-                } else if (PrefUtil.getUsername(context).equalsIgnoreCase(user)){
-                    holder.llChatBubble.setBackground(context.getResources().getDrawable(R.drawable.bubble_in));
-                    params.gravity = Gravity.RIGHT;
                 }else{
                     holder.llChatBubble.setBackground(context.getResources().getDrawable(R.drawable.bubble_out));
                     params.gravity = Gravity.LEFT;

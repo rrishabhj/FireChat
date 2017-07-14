@@ -58,6 +58,7 @@ public class GroupFragment extends Fragment {
 	private MessageRecyclerViewAdaptor mAdapter;
 	private List<FriendlyMessage> messageList = new ArrayList<>();
 	private String mUsername;
+	private LinearLayoutManager mLayoutManager;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -82,8 +83,8 @@ public class GroupFragment extends Fragment {
 		mSendButton = (Button) rootView.findViewById(R.id.sendButton);
 
 		// init rv
-		mAdapter = new MessageRecyclerViewAdaptor(messageList, getContext());
-		RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
+		mAdapter = new MessageRecyclerViewAdaptor(messageList, getContext(),true);
+		mLayoutManager = new LinearLayoutManager(getContext());
 		recyclerView.setLayoutManager(mLayoutManager);
 		recyclerView.setItemAnimator(new DefaultItemAnimator());
 		recyclerView.setAdapter(mAdapter);
@@ -133,6 +134,11 @@ public class GroupFragment extends Fragment {
 		mSendButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
+				if (messageList.size()!=0) {
+					mLayoutManager.scrollToPosition(messageList.size() - 1);
+					recyclerView.smoothScrollToPosition(messageList.size());
+				}
+
 				FriendlyMessage friendlyMessage = new FriendlyMessage(mMessageEditText.getText().toString(),
 						mUsername, null);
 				mMessagesDatabaseReference.push().setValue(friendlyMessage);
@@ -198,6 +204,11 @@ public class GroupFragment extends Fragment {
 
 					friendlyMessage.setText(PrefUtil.getUsername(getContext())+"@"+friendlyMessage.getText());
 					messageList.add(friendlyMessage);
+
+					if (messageList.size()!=0) {
+						mLayoutManager.scrollToPosition(messageList.size() - 1);
+						recyclerView.smoothScrollToPosition(messageList.size());
+					}
 				}
 
 				public void onChildChanged(DataSnapshot dataSnapshot, String s) {}

@@ -35,6 +35,17 @@
         android:layout_marginRight="12dp"
         android:layout_marginTop="12dp">
 
+        <TextView
+            android:id="@+id/usernameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:textStyle="bold"
+            android:visibility="gone"
+            android:textColor="@color/authui_colorAccent"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            tools:text="Rishabh Jindal" />
+
     <TextView
         android:id="@+id/messageTextView"
         android:layout_width="wrap_content"

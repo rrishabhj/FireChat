@@ -148,6 +148,10 @@ public class MainActivity extends AppCompatActivity implements
                 sendInvitation();
                 return true;
 
+            case R.id.profile_menu:
+
+                startActivity(new Intent(MainActivity.this,ProfileActivity.class));
+
             default:
                 return super.onOptionsItemSelected(item);
         }

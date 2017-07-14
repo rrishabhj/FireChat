@@ -77,7 +77,7 @@ public class ChatActiivty extends AppCompatActivity {
     private FirebaseStorage mFirebaseStorage;
     private FirebaseRemoteConfig mFirebaseRemoteConfig;
     private DatabaseReference mMessagesDatabaseReference;
-    private DatabaseReference mMessagesReceiptDatabaseReference;
+//    private DatabaseReference mMessagesReceiptDatabaseReference;
     private DatabaseReference mMessagesMessageDatabaseReference;
     private StorageReference mChatPhotosStorageReference;
     private RecyclerView recyclerView;
@@ -92,7 +92,7 @@ public class ChatActiivty extends AppCompatActivity {
     private DatabaseReference mTypingUsersDatabaseListnerReference;
     private SimpleDateFormat dateString;
     private ValueEventListener isTypingPostListener;
-    private ValueEventListener isSeeenPostListener;
+//    private ValueEventListener isSeeenPostListener;
     private TabLayout tabLayout;
     private Toolbar toolbar;
     private CircleImageView appbarDP;
@@ -136,7 +136,7 @@ public class ChatActiivty extends AppCompatActivity {
         mMessagesDatabaseReference = mFirebaseDatabase.getReference().child("messages").child(PrefUtil.getEmail(ChatActiivty.this).split("@")[0]).child(senderUserId).child("chat");
         mMessagesMessageDatabaseReference = mFirebaseDatabase.getReference().child("messages").child(senderUserId).child(PrefUtil.getEmail(ChatActiivty.this).split("@")[0]).child("chat");
 
-        mMessagesReceiptDatabaseReference = mFirebaseDatabase.getReference().child("messages").child(senderUserId).child(PrefUtil.getEmail(ChatActiivty.this).split("@")[0]);
+//        mMessagesReceiptDatabaseReference = mFirebaseDatabase.getReference().child("messages").child(senderUserId).child(PrefUtil.getEmail(ChatActiivty.this).split("@")[0]);
 
         mChatPhotosStorageReference = mFirebaseStorage.getReference().child("chat_photos");
 
@@ -209,29 +209,29 @@ public class ChatActiivty extends AppCompatActivity {
 
         //todo improve logic this is not working
         // isSeen event listner
-        isSeeenPostListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+//        isSeeenPostListener = new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//
+//                String str= (String) dataSnapshot.getValue();
+//                if(str!=null) {
+//                    if (str.equalsIgnoreCase("true")) {
+//                        tvSeen.setVisibility(View.VISIBLE);
+//                    } else {
+//                        tvSeen.setVisibility(View.GONE);
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//                // Getting Post failed, log a message
+//                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+//                // ...
+//            }
+//        };
 
-                String str= (String) dataSnapshot.getValue();
-                if(str!=null) {
-                    if (str.equalsIgnoreCase("true")) {
-                        tvSeen.setVisibility(View.VISIBLE);
-                    } else {
-                        tvSeen.setVisibility(View.GONE);
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // Getting Post failed, log a message
-                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
-                // ...
-            }
-        };
-
-        mMessagesReceiptDatabaseReference.child("isReceipt").addValueEventListener(isSeeenPostListener);
+//        mMessagesReceiptDatabaseReference.child("isReceipt").addValueEventListener(isSeeenPostListener);
 
 
 
@@ -294,7 +294,7 @@ public class ChatActiivty extends AppCompatActivity {
                 String chatDate = String.valueOf(System.currentTimeMillis());
                 FriendlyMessage friendlyMessage = new FriendlyMessage(mMessageEditText.getText().toString(), chatDate, null);
                 mMessagesDatabaseReference.push().setValue(friendlyMessage);
-                mMessagesReceiptDatabaseReference.child("isReceipt").setValue("false");
+//                mMessagesReceiptDatabaseReference.child("isReceipt").setValue("false");
 
                 mLayoutManager.scrollToPosition(messageList.size() - 1);
 
@@ -381,6 +381,7 @@ public class ChatActiivty extends AppCompatActivity {
                 }
             };
             mMessagesDatabaseReference.addChildEventListener(mChildEventListener);
+            mMessagesDatabaseReference.keepSynced(true);
 
 
 
@@ -401,7 +402,7 @@ public class ChatActiivty extends AppCompatActivity {
 //                    mMessageAdapter.add(friendlyUser);
                     message.setText("receiver@"+message.getText());
                     messageList.add(message);
-                    mMessagesReceiptDatabaseReference.child("isReceipt").setValue("true");
+//                    mMessagesReceiptDatabaseReference.child("isReceipt").setValue("true");
                     Collections.sort(messageList);
 
                     if (messageList.size()!=0) {
@@ -422,6 +423,7 @@ public class ChatActiivty extends AppCompatActivity {
                 }
             };
             mMessagesMessageDatabaseReference.addChildEventListener(mChildChildEventListener);
+            mMessagesMessageDatabaseReference.keepSynced(true);
 
 
         }else {
@@ -446,10 +448,10 @@ public class ChatActiivty extends AppCompatActivity {
             isTypingPostListener = null;
         }
 
-        if (isSeeenPostListener != null ) {
-            mMessagesReceiptDatabaseReference.removeEventListener(isSeeenPostListener);
-            isSeeenPostListener = null;
-        }
+//        if (isSeeenPostListener != null ) {
+//            mMessagesReceiptDatabaseReference.removeEventListener(isSeeenPostListener);
+//            isSeeenPostListener = null;
+//        }
 
     }
 
