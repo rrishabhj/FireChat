@@ -130,13 +130,13 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="44dp"
+            android:layout_marginBottom="88dp"
             android:background="#ffffff"
             android:padding="12dp"
             android:weightSum="1">
 
             <TextView
-                android:text="About and phone number"
+                android:text="About and email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/textView2"

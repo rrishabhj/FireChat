@@ -139,6 +139,7 @@ public class GroupFragment extends Fragment {
 					recyclerView.smoothScrollToPosition(messageList.size());
 				}
 
+
 				FriendlyMessage friendlyMessage = new FriendlyMessage(mMessageEditText.getText().toString(),
 						mUsername, null);
 				mMessagesDatabaseReference.push().setValue(friendlyMessage);

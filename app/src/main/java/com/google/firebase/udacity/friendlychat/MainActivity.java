@@ -172,6 +172,7 @@ public class MainActivity extends AppCompatActivity implements
         }
     }
 
+
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
         Log.d(TAG, "onConnectionFailed:" + connectionResult);
@@ -184,6 +185,4 @@ public class MainActivity extends AppCompatActivity implements
                 .build();
         startActivityForResult(intent, REQUEST_INVITE);
     }
-
-
 }

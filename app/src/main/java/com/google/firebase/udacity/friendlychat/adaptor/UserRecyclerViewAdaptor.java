@@ -55,7 +55,9 @@ public class UserRecyclerViewAdaptor extends RecyclerView.Adapter<UserRecyclerVi
     public void onBindViewHolder(MyViewHolder holder, int position) {
         User user= userList.get(position);
         holder.username.setText(user.getName());
-        holder.tvEmail.setText(user.getEmail());
+
+        // is receipt is being used as status
+        holder.tvEmail.setText(user.getIsReceipt());
     }
 
     @Override
