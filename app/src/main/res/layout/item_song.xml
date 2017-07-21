@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:padding="12dp"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:text="Coldplay.mp3"
+        android:textAppearance="?attr/textAppearanceListItem"
+        android:layout_width="match_parent"
+
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_song_name" />
+
+    <TextView
+        android:text="9.81 MB"
+        android:textAppearance="?attr/textAppearanceListItemSmall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_song_size" />
+</LinearLayout>

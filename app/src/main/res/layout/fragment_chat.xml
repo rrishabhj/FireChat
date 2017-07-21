@@ -16,6 +16,7 @@
 
   <android.support.v7.widget.RecyclerView
       android:id="@+id/rv_message"
+      android:layout_above="@+id/btn_sync_Songs"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:scrollbars="vertical" />
@@ -28,4 +29,14 @@
       android:layout_height="wrap_content"
       android:layout_centerHorizontal="true"
       android:layout_centerVertical="true"/>
+
+  <Button
+      android:gravity="center"
+      android:text="Sync Songs"
+      android:id="@+id/btn_sync_Songs"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_alignParentBottom="true"
+      android:layout_alignParentLeft="true"
+      android:layout_alignParentStart="true" />
 </RelativeLayout>
