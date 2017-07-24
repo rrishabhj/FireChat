@@ -8,6 +8,8 @@ import android.util.SparseArray;
 import android.view.ViewGroup;
 import com.google.firebase.udacity.friendlychat.tabs.ChatFragment;
 import com.google.firebase.udacity.friendlychat.tabs.GroupFragment;
+import com.google.firebase.udacity.friendlychat.tabs.UsersFragment;
+
 import java.lang.ref.WeakReference;
 
 public class TabsPagerAdapter extends FragmentStatePagerAdapter {
@@ -23,13 +25,18 @@ public class TabsPagerAdapter extends FragmentStatePagerAdapter {
 	public Fragment getItem(int index) {
 
 		switch (index) {
-		case 0:
-			ChatFragment downloadFragment=new ChatFragment();
-			return downloadFragment;
-		case 1:
-			GroupFragment gamesFragment= new GroupFragment();
+			case 0:
+				ChatFragment downloadFragment=new ChatFragment();
+				return downloadFragment;
 
-			return gamesFragment;
+			case 1:
+
+			UsersFragment usersFragment =new UsersFragment();
+			return usersFragment;
+
+			case 2:
+				GroupFragment gamesFragment= new GroupFragment();
+				return gamesFragment;
 		default:
 			return new ChatFragment();
 		}
@@ -38,15 +45,17 @@ public class TabsPagerAdapter extends FragmentStatePagerAdapter {
 	@Override
 	public int getCount() {
 		// get item count - equal to number of tabs
-		return 2;
+		return 3;
 	}
 
 
 	@Override public CharSequence getPageTitle(int position) {
 		if(position==0){
-			return new String("Chat");
+			return new String("Chats");
+		}else if (position == 1 ){
+			return new String("Users");
 		}else {
-			return new String("Group");
+			return new String("Group Chat");
 		}
 	}
 

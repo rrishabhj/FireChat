@@ -126,6 +126,7 @@ public class MainActivity extends AppCompatActivity implements
 
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.addTab(tabLayout.newTab().setText("Chat"));
+        tabLayout.addTab(tabLayout.newTab().setText("Users"));
         tabLayout.addTab(tabLayout.newTab().setText("Group"));
         tabLayout.setupWithViewPager(viewPager);
     }
@@ -150,7 +151,7 @@ public class MainActivity extends AppCompatActivity implements
 
             case R.id.profile_menu:
 
-                startActivity(new Intent(MainActivity.this,ProfileActivity.class));
+                startActivity(new Intent(MainActivity.this,SongsProfile.class));
 
             default:
                 return super.onOptionsItemSelected(item);

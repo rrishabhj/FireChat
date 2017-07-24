@@ -126,7 +126,7 @@ public class ChatActiivty extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.rv_message);
 
 
-        // get senders user_id
+        // get senders user_id = email
         senderUserId = getIntent().getStringExtra("user_id");
 
 

@@ -1,16 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="horizontal" android:layout_width="match_parent"
     android:padding="12dp"
-    android:layout_height="wrap_content">
+    android:id="@+id/ll_item_song"
+    android:layout_height="wrap_content"
+    android:minHeight="89dp">
 
+    <ImageView
+        android:layout_width="49dp"
+        android:layout_height="match_parent"
+        android:src="@drawable/ic_song"
+        />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center">
     <TextView
         android:text="Coldplay.mp3"
         android:textAppearance="?attr/textAppearanceListItem"
         android:layout_width="match_parent"
 
         android:layout_height="wrap_content"
-        android:id="@+id/tv_song_name" />
+        android:id="@+id/tv_song_name"
+        android:maxLines="2" />
 
     <TextView
         android:text="9.81 MB"
@@ -18,4 +32,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/tv_song_size" />
+
+    </LinearLayout>
+
+    <CheckBox
+        android:id="@+id/checkb_select"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent" />
 </LinearLayout>

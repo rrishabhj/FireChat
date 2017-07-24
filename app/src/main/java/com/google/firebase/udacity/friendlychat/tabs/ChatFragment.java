@@ -2,6 +2,9 @@ package com.google.firebase.udacity.friendlychat.tabs;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -41,8 +44,10 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.udacity.friendlychat.ChatActiivty;
 import com.google.firebase.udacity.friendlychat.MainActivity;
+import com.google.firebase.udacity.friendlychat.MySongsActivity;
 import com.google.firebase.udacity.friendlychat.R;
-import com.google.firebase.udacity.friendlychat.SongActivity;
+//import com.google.firebase.udacity.friendlychat.SongActivity;
+import com.google.firebase.udacity.friendlychat.SongsProfile;
 import com.google.firebase.udacity.friendlychat.Utils.PrefUtil;
 import com.google.firebase.udacity.friendlychat.Utils.Utilities;
 import com.google.firebase.udacity.friendlychat.adaptor.TabsPagerAdapter;
@@ -51,6 +56,7 @@ import com.google.firebase.udacity.friendlychat.adaptor.UserRecyclerViewListener
 import com.google.firebase.udacity.friendlychat.model.Song;
 import com.google.firebase.udacity.friendlychat.model.User;
 
+import java.io.File;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
@@ -143,20 +149,20 @@ public class ChatFragment extends Fragment {
 
 
 		// sync songs with firebase
-		syncSongs.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-
-				songsList = getMp3Songs();
-				if (songsList!=null){
-
-					for (Song song: songsList){
-
-						mSongsDatabaseReference.child(song.getMediaId()).setValue(song);
-					}
-				}
-			}
-		});
+//		syncSongs.setOnClickListener(new View.OnClickListener() {
+//			@Override
+//			public void onClick(View view) {
+//
+//				songsList = getMp3Songs();
+//				if (songsList!=null){
+//
+//					for (Song song: songsList){
+//
+//						mSongsDatabaseReference.child(song.getMediaId()).setValue(song);
+//					}
+//				}
+//			}
+//		});
 
 		//Init RecyclerView
 		mAdapter = new UserRecyclerViewAdaptor(userList);
@@ -184,7 +190,7 @@ public class ChatFragment extends Fragment {
 			@Override
 			public void onLongClick(View view, int position) {
 
-				Intent intent = new Intent(getContext(), SongActivity.class);
+				Intent intent = new Intent(getContext(), SongsProfile.class);
 				final String dbEmail= userList.get(position).getEmail().split("@")[0];
 				intent.putExtra(USER_ID, dbEmail);
 				startActivity(intent);
@@ -256,7 +262,7 @@ public class ChatFragment extends Fragment {
 
 				// save in firebase db
 				final String key = mUsersDatabaseReference.push().getKey();
-				final User user1=new User(email,name,u_id,key,isOnline,"false","Hey I'm Using Firechat");
+				final User user1=new User(email,name,u_id,key,isOnline,"false","Dumy variable","Hey I'm Using Firechat","0","0");
 
 
 				db_Email = email.split("@")[0];
@@ -473,8 +479,10 @@ public class ChatFragment extends Fragment {
 							.getColumnIndex(MediaStore.Audio.Media.DATA));
 //					fullsongpath.add(fullpath);
 
+					Bitmap cover  = getSongCoverImage(Uri.fromFile(new File(fullpath)));
+
 					String size = String.valueOf(cursor.getInt(cursor
-							.getColumnIndex(MediaStore.Audio.Media.SIZE)));
+							.getColumnIndex(MediaStore.Audio.Media.SIZE))/(1024*1024));
 
 //					String album_name = cursor.getString(cursor
 //							.getColumnIndex(MediaStore.Audio.Media.ALBUM));
@@ -504,6 +512,21 @@ public class ChatFragment extends Fragment {
 			cursor.close();
 		}
 		return null;
+	}
+
+
+	// return the bitmap of the cover image if present else get default image from the uri of the song
+
+	public Bitmap getSongCoverImage(Uri uri){
+
+		MediaMetadataRetriever mmr = new MediaMetadataRetriever();
+		byte[] rawArt;
+		BitmapFactory.Options bfo=new BitmapFactory.Options();
+
+		mmr.setDataSource(getApplicationContext(), uri);
+		rawArt = mmr.getEmbeddedPicture();
+
+		return rawArt != null ? BitmapFactory.decodeByteArray(rawArt, 0, rawArt.length, bfo): BitmapFactory.decodeResource(getResources() , R.drawable.ic_default_cover_song) ;
 	}
 
 
