@@ -16,6 +16,7 @@ import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -26,6 +27,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.jobdispatcher.Driver;
+import com.firebase.jobdispatcher.FirebaseJobDispatcher;
+import com.firebase.jobdispatcher.GooglePlayDriver;
+import com.firebase.jobdispatcher.Job;
+import com.firebase.jobdispatcher.Lifetime;
+import com.firebase.jobdispatcher.Trigger;
+import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseUser;
@@ -42,8 +50,10 @@ import com.google.firebase.storage.UploadTask;
 import com.google.firebase.udacity.friendlychat.Utils.PrefUtil;
 import com.google.firebase.udacity.friendlychat.adaptor.MessageRecyclerViewAdaptor;
 import com.google.firebase.udacity.friendlychat.adaptor.UserRecyclerViewAdaptor;
+import com.google.firebase.udacity.friendlychat.model.ChatProperties;
 import com.google.firebase.udacity.friendlychat.model.FriendlyMessage;
 import com.google.firebase.udacity.friendlychat.model.User;
+import com.google.firebase.udacity.friendlychat.service.MyLocationService;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -100,6 +110,7 @@ public class ChatActiivty extends AppCompatActivity {
     private ActionBar actionBar;
     private DatabaseReference mUsersDatabaseListnerReference;
     private LinearLayoutManager mLayoutManager;
+    private DatabaseReference mChatpropDatabseReference;
 
 
     @Override
@@ -129,11 +140,15 @@ public class ChatActiivty extends AppCompatActivity {
         // get senders user_id = email
         senderUserId = getIntent().getStringExtra("user_id");
 
+        if (senderUserId==null){
+            return;
+        }
 
 //        mMessagesDatabaseReference = mFirebaseDatabase.getReference().child("messages").child(PrefUtil.getUserId(ChatActiivty.this)).child(senderUserId).child("chat");
 
 
         mMessagesDatabaseReference = mFirebaseDatabase.getReference().child("messages").child(PrefUtil.getEmail(ChatActiivty.this).split("@")[0]).child(senderUserId).child("chat");
+        mChatpropDatabseReference = mFirebaseDatabase.getReference().child("messages").child(PrefUtil.getEmail(ChatActiivty.this).split("@")[0]).child(senderUserId);
         mMessagesMessageDatabaseReference = mFirebaseDatabase.getReference().child("messages").child(senderUserId).child(PrefUtil.getEmail(ChatActiivty.this).split("@")[0]).child("chat");
 
 //        mMessagesReceiptDatabaseReference = mFirebaseDatabase.getReference().child("messages").child(senderUserId).child(PrefUtil.getEmail(ChatActiivty.this).split("@")[0]);
@@ -295,6 +310,10 @@ public class ChatActiivty extends AppCompatActivity {
                 FriendlyMessage friendlyMessage = new FriendlyMessage(mMessageEditText.getText().toString(), chatDate, null);
                 mMessagesDatabaseReference.push().setValue(friendlyMessage);
 //                mMessagesReceiptDatabaseReference.child("isReceipt").setValue("false");
+
+                String name = getIntent().getStringExtra("user_name");
+                ChatProperties chatProperties = new ChatProperties(name, senderUserId,mMessageEditText.getText().toString(),chatDate);
+                mChatpropDatabseReference.child("prop").setValue(chatProperties);
 
                 mLayoutManager.scrollToPosition(messageList.size() - 1);
 
@@ -527,4 +546,50 @@ public class ChatActiivty extends AppCompatActivity {
         }
 
     }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.chat_menu, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.oprn_profile_menu:
+
+                Driver driver = new GooglePlayDriver(ChatActiivty.this);
+                FirebaseJobDispatcher dispatcher = new FirebaseJobDispatcher(driver);
+
+                try {
+                    Job myJob = dispatcher.newJobBuilder()
+                            .setService(MyLocationService.class) // the JobService that will be called
+                            .setTag("my-unique-tag")        // uniquely identifies the job
+                            .setRecurring(true)
+                            .setLifetime(Lifetime.UNTIL_NEXT_BOOT)
+                            .setTrigger(Trigger.executionWindow(0, 3))
+                            .build();
+
+                    dispatcher.mustSchedule(myJob);
+
+                }catch (Exception e){
+                    Log.d("MainActivity",e.toString());
+                }
+                return true;
+            case R.id.show_loc_menu:
+
+                startActivity(new Intent(ChatActiivty.this, UsersMapsActivity.class));
+
+
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+
 }

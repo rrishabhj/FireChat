@@ -53,6 +53,7 @@ public class SongsProfile extends AppCompatActivity {
     private ChildEventListener mChildEventListener;
     private FloatingActionButton SongsFab;
     private FloatingActionButton songsFab;
+    private TextView tvIsSongsPresen;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,6 +65,7 @@ public class SongsProfile extends AppCompatActivity {
 
         songsRecyclerView = (RecyclerView) findViewById(R.id.rv_songs);
         songsFab = (FloatingActionButton) findViewById(R.id.fab_add_songs);
+        tvIsSongsPresen = (TextView)findViewById(R.id.tvIsSongsPresen);
 
 //         data email when opening my and others profile
         userEmail = getIntent().getStringExtra("user_id");
@@ -95,6 +97,7 @@ public class SongsProfile extends AppCompatActivity {
             }
         });
 
+
     }
 
     private void attachDatabaseReadListener() {
@@ -110,6 +113,13 @@ public class SongsProfile extends AppCompatActivity {
                         Song song = dataSnapshot.getValue(Song.class);
                         songList.add(song);
                         mAdapter.notifyDataSetChanged();
+
+                        if (songList==null || songList.size()==0){
+                            tvIsSongsPresen.setVisibility(View.VISIBLE);
+                        }else {
+
+                            tvIsSongsPresen.setVisibility(View.GONE);
+                        }
                     }
 
                     public void onChildChanged(DataSnapshot dataSnapshot, String s) {
@@ -133,6 +143,8 @@ public class SongsProfile extends AppCompatActivity {
 //            mProgressBar.setVisibility(ProgressBar.INVISIBLE);
             }
         }
+
+
     }
 
     private void detachDatabaseReadListener() {

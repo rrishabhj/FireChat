@@ -21,4 +21,14 @@ public class Utilities {
     }
     return false;
   }
+
+  public static boolean getLocationPermission(Activity activity) {
+    if (ActivityCompat.checkSelfPermission(activity, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+      ActivityCompat.requestPermissions(activity, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+              REQUEST);
+    } else {
+      return true;
+    }
+    return false;
+  }
 }

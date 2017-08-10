@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -43,6 +44,7 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.udacity.friendlychat.ChatActiivty;
+import com.google.firebase.udacity.friendlychat.ContactsActivity;
 import com.google.firebase.udacity.friendlychat.MainActivity;
 import com.google.firebase.udacity.friendlychat.MySongsActivity;
 import com.google.firebase.udacity.friendlychat.R;
@@ -53,13 +55,17 @@ import com.google.firebase.udacity.friendlychat.Utils.Utilities;
 import com.google.firebase.udacity.friendlychat.adaptor.TabsPagerAdapter;
 import com.google.firebase.udacity.friendlychat.adaptor.UserRecyclerViewAdaptor;
 import com.google.firebase.udacity.friendlychat.adaptor.UserRecyclerViewListener;
+import com.google.firebase.udacity.friendlychat.adaptor.UsersMessageRecyclerView;
 import com.google.firebase.udacity.friendlychat.model.Song;
 import com.google.firebase.udacity.friendlychat.model.User;
+import com.google.firebase.udacity.friendlychat.model.UsersMessages;
+import com.google.firebase.udacity.friendlychat.service.MyLocationService;
 
 import java.io.File;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
@@ -97,8 +103,10 @@ public class ChatFragment extends Fragment {
 	private FirebaseRemoteConfig mFirebaseRemoteConfig;
 
 	private List<User> userList = new ArrayList<>();
+	private List<UsersMessages> userList2 = new ArrayList<>();
 	private RecyclerView recyclerView;
 	private UserRecyclerViewAdaptor mAdapter;
+
 	public String USER_ID = "user_id";
 	public String USER_NAME = "user_name";
 
@@ -110,9 +118,13 @@ public class ChatFragment extends Fragment {
 	private ViewPager viewPager;
 	private TabsPagerAdapter mTabsAdapter;
 	private Cursor cursor;
-	private Button syncSongs;
+//	private Button syncSongs;
 	private ArrayList<Song> songsList;
 	private DatabaseReference mSongsDatabaseReference;
+	private Button btnEnableLoc;
+	private FloatingActionButton fabAddContacts;
+	private UsersMessageRecyclerView mAdapter2;
+	private String myEmail;
 
 
 	@Override
@@ -124,7 +136,9 @@ public class ChatFragment extends Fragment {
 		// init views
 		recyclerView = (RecyclerView) rootView.findViewById(R.id.rv_message);
 		mProgressBar = (ProgressBar) rootView.findViewById(R.id.progressBar);
-		syncSongs = (Button)rootView.findViewById(R.id.btn_sync_Songs);
+		btnEnableLoc = (Button) rootView.findViewById(R.id.btn_enable_loc);
+		fabAddContacts = (FloatingActionButton)rootView.findViewById(R.id.fabAddContacts);
+//		syncSongs = (Button)rootView.findViewById(R.id.btn_sync_Songs);
 
 		// Initialize Firebase components
 		mFirebaseDatabase = FirebaseDatabase.getInstance();
@@ -133,9 +147,24 @@ public class ChatFragment extends Fragment {
 		mFirebaseAuth = FirebaseAuth.getInstance();
 
 		mUsersDatabaseReference = mFirebaseDatabase.getReference().child("users");
-		mSongsDatabaseReference = mFirebaseDatabase.getReference().child("songs").child(PrefUtil.getEmail(getContext()).split("@")[0]);
+
+		myEmail = PrefUtil.getEmail(getContext());
+
+		if (myEmail != null) {
+			mMessagesDatabaseReference = mFirebaseDatabase.getReference().child("messages").child(PrefUtil.getEmail(getContext()).split("@")[0]);
+		}
+//		mSongsDatabaseReference = mFirebaseDatabase.getReference().child("songs").child(PrefUtil.getEmail(getContext()).split("@")[0]);
 //		mChatPhotosStorageReference = mFirebaseStorage.getReference().child("chat_photos");
 
+
+		fabAddContacts.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+
+				startActivity(new Intent(getContext(), ContactsActivity.class));
+
+			}
+		});
 
 
 		//        PrefUtil.clearSharedPreferences(this);
@@ -164,12 +193,18 @@ public class ChatFragment extends Fragment {
 //			}
 //		});
 
-		//Init RecyclerView
-		mAdapter = new UserRecyclerViewAdaptor(userList);
+//		Init RecyclerView
+//		mAdapter = new UserRecyclerViewAdaptor(userList);
+		mAdapter2 = new UsersMessageRecyclerView(userList2);
+
 		RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
 		recyclerView.setLayoutManager(mLayoutManager);
 		recyclerView.setItemAnimator(new DefaultItemAnimator());
-		recyclerView.setAdapter(mAdapter);
+//
+//		recyclerView.setAdapter(mAdapter);
+//
+//
+		recyclerView.setAdapter(mAdapter2);
 
 
 		// onTouchCLick Listener
@@ -179,31 +214,47 @@ public class ChatFragment extends Fragment {
 
 				Intent chatActivity = new Intent(getContext(),ChatActiivty.class);
 
-				final String db_Email= userList.get(position).getEmail().split("@")[0];
-				final String db_name= userList.get(position).getName();
+				final String db_Email= userList2.get(position).getEmail().split("@")[0];
+				final String db_name= userList2.get(position).getUsername();
 				chatActivity.putExtra(USER_ID,db_Email);
 				chatActivity.putExtra(USER_NAME,db_name);
 				startActivity(chatActivity);
-				Toast.makeText(getContext(),"Success"+userList.get(position).getU_id(),Toast.LENGTH_LONG).show();
+				Toast.makeText(getContext(),"Success",Toast.LENGTH_LONG).show();
 			}
 
 			@Override
 			public void onLongClick(View view, int position) {
 
 				Intent intent = new Intent(getContext(), SongsProfile.class);
-				final String dbEmail= userList.get(position).getEmail().split("@")[0];
+				final String dbEmail= userList2.get(position).getEmail().split("@")[0];
 				intent.putExtra(USER_ID, dbEmail);
 				startActivity(intent);
 
 			}
 		}));
 
+		btnEnableLoc.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+
+				new Thread(new Runnable() {
+					@Override
+					public void run() {
+
+						getContext().startService(new Intent(getContext(), MyLocationService.class));
+
+					}
+				}).start();
+
+			}
+		});
+
 		mAuthStateListener = new FirebaseAuth.AuthStateListener() {
 			@Override
 			public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
 				FirebaseUser user = firebaseAuth.getCurrentUser();
 				if (user != null) {
-					// User is signed in
+//					 User is signed in
 					onSignedInInitialize(user.getDisplayName());
 				} else {
 					if (PrefUtil.getLoginStatus(getContext())) {
@@ -339,9 +390,9 @@ public class ChatFragment extends Fragment {
 		if (mAuthStateListener != null) {
 			mFirebaseAuth.removeAuthStateListener(mAuthStateListener);
 		}
-		mAdapter.clear();
+		mAdapter2.clear();
 		//        mMessageAdapter.clear();
-		detachDatabaseReadListener();
+//		detachDatabaseReadListener();
 	}
 
 	@Override
@@ -354,7 +405,8 @@ public class ChatFragment extends Fragment {
 
 	private void onSignedInInitialize(String username) {
 		mUsername = username;
-		attachDatabaseReadListener();
+//		attachDatabaseReadListener();
+		attachDatabaseReadListener2();
 	}
 
 	private void onSignedOutCleanup() {
@@ -365,43 +417,103 @@ public class ChatFragment extends Fragment {
 
 
 
-		mAdapter.clear();
+		mAdapter2.clear();
 		//        mMessageAdapter.clear();
 		PrefUtil.clearSharedPreferences(getContext());
-		detachDatabaseReadListener();
+//		detachDatabaseReadListener();
 	}
 
-	private void attachDatabaseReadListener() {
+	private void attachDatabaseReadListener2() {
 
-		if (mChildEventListener == null) {
-			mChildEventListener = new ChildEventListener() {
-				@Override
-				public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-					// Initialize progress bar
-					mProgressBar.setVisibility(ProgressBar.INVISIBLE);
 
-					User friendlyUser = dataSnapshot.getValue(User.class);
-					//                    mMessageAdapter.add(friendlyUser);
+		mMessagesDatabaseReference.addListenerForSingleValueEvent(
+				new ValueEventListener() {
+					@Override
+					public void onDataChange(DataSnapshot dataSnapshot) {
+						//Get map of users in datasnapshot
 
-					if (!(friendlyUser.getEmail().split("@")[0].equals(PrefUtil.getEmail(getContext()).split("@")[0] ))){
-						userList.add(friendlyUser);
-						mAdapter.notifyDataSetChanged();
+
+						if (dataSnapshot.getValue() != null) {
+							collectLastMessages((Map<String, Object>) dataSnapshot.getValue());
+						}
 					}
-				}
 
-				public void onChildChanged(DataSnapshot dataSnapshot, String s) {}
-				public void onChildRemoved(DataSnapshot dataSnapshot) {}
-				public void onChildMoved(DataSnapshot dataSnapshot, String s) {}
-				public void onCancelled(DatabaseError databaseError) {
-					// Initialize progress bar
-					mProgressBar.setVisibility(ProgressBar.INVISIBLE);
+					@Override
+					public void onCancelled(DatabaseError databaseError) {
+						//handle databaseError
+					}
+				});
 
-				}
-			};
-			mUsersDatabaseReference.orderByValue().limitToLast(100).addChildEventListener(mChildEventListener);
-			mUsersDatabaseReference.keepSynced(true);
-		}
 	}
+
+	private void collectLastMessages(Map<String, Object> value) {
+		//iterate through each user, ignoring their UID
+		userList2.clear();
+		for (Map.Entry<String, Object> entry : value.entrySet()){
+
+			//Get user map
+			Map singleUser = (Map) entry.getValue();
+
+			Map chatProp = ((Map)singleUser.get("prop"));
+
+
+
+			String lastMessage = (String) chatProp.get("lastMessage");
+			String lastMessageDate = (String) chatProp.get("lastMessageDate");
+			String userName= (String) chatProp.get("username");
+			String email= (String) chatProp.get("email");
+
+			//Get user map
+//			Map<String, Object> singleUser = (Map<String, Object>) entry.getValue();
+//
+//			// my usernames
+//			String email = entry.getKey();
+//
+//			ArrayList<Map<String, Object>> chat = (ArrayList<Map<String, Object>>)singleUser.get("chat");
+//
+//			((Map<String, Object>)chat.get(chat.size()-1)).ge
+
+			UsersMessages usersMessages = new UsersMessages(userName, email,lastMessage, lastMessageDate);
+//
+			userList2.add(usersMessages);
+			Log.d("Tag", singleUser.toString()+ " name:"+entry.getValue());
+			//Get phone field and append to list
+//			phoneNumbers.add((Long) singleUser.get("phone"));
+		}
+		mAdapter2.notifyDataSetChanged();
+	}
+
+//	private void attachDatabaseReadListener() {
+//
+//		if (mChildEventListener == null) {
+//			mChildEventListener = new ChildEventListener() {
+//				@Override
+//				public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+//					// Initialize progress bar
+//					mProgressBar.setVisibility(ProgressBar.INVISIBLE);
+//
+//					User friendlyUser = dataSnapshot.getValue(User.class);
+//					//                    mMessageAdapter.add(friendlyUser);
+//
+//					if (!(friendlyUser.getEmail().split("@")[0].equals(PrefUtil.getEmail(getContext()).split("@")[0] ))){
+//						userList.add(friendlyUser);
+////						mAdapter.notifyDataSetChanged();
+//					}
+//				}
+//
+//				public void onChildChanged(DataSnapshot dataSnapshot, String s) {}
+//				public void onChildRemoved(DataSnapshot dataSnapshot) {}
+//				public void onChildMoved(DataSnapshot dataSnapshot, String s) {}
+//				public void onCancelled(DatabaseError databaseError) {
+//					// Initialize progress bar
+//					mProgressBar.setVisibility(ProgressBar.INVISIBLE);
+//
+//				}
+//			};
+//			mUsersDatabaseReference.orderByValue().limitToLast(100).addChildEventListener(mChildEventListener);
+//			mUsersDatabaseReference.keepSynced(true);
+//		}
+//	}
 
 	private void detachDatabaseReadListener() {
 		if (mChildEventListener != null) {

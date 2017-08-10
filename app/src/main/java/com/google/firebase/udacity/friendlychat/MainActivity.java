@@ -98,6 +98,8 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Utilities.getLocationPermission(MainActivity.this);
         setContentView(R.layout.activity_main);
 
         Utilities.getStoragePermission(MainActivity.this);
@@ -152,10 +154,15 @@ public class MainActivity extends AppCompatActivity implements
             case R.id.profile_menu:
 
                 startActivity(new Intent(MainActivity.this,SongsProfile.class));
+                break;
+            case R.id.add_group_menu:
 
+                startActivity(new Intent(MainActivity.this, AddGroupActivity.class));
+                break;
             default:
                 return super.onOptionsItemSelected(item);
         }
+        return true;
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

@@ -57,12 +57,12 @@ public class UserRecyclerViewAdaptor extends RecyclerView.Adapter<UserRecyclerVi
         holder.username.setText(user.getName());
 
         // is receipt is being used as status
-        holder.tvEmail.setText(user.getIsReceipt());
+        holder.tvEmail.setText(user.getStatus());
     }
 
     @Override
     public int getItemCount() {
-        return userList.size();
+        return userList == null ? 0 : userList.size();
     }
 
     public void clear(){

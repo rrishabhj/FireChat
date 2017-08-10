@@ -97,9 +97,7 @@ public class UsersFragment extends Fragment {
     private StorageReference mChatPhotosStorageReference;
     private FirebaseRemoteConfig mFirebaseRemoteConfig;
 
-    private List<User> userList = new ArrayList<>();
     private RecyclerView recyclerView;
-    private UsersSongsRecyclerViewAdaptor mAdapter;
     public String USER_ID = "user_id";
     public String USER_NAME = "user_name";
 
@@ -114,6 +112,8 @@ public class UsersFragment extends Fragment {
     private Button syncSongs;
     private ArrayList<Song> songsList;
     private DatabaseReference mSongsDatabaseReference;
+    private List<User> userList = new ArrayList<>();
+    private UsersSongsRecyclerViewAdaptor mAdapter;
 
 
     @Override
@@ -129,13 +129,13 @@ public class UsersFragment extends Fragment {
 
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mUsersDatabaseReference = mFirebaseDatabase.getReference().child("users");
-        mSongsDatabaseReference = mFirebaseDatabase.getReference().child("songs").child(PrefUtil.getEmail(getContext()).split("@")[0]);
+//        mSongsDatabaseReference = mFirebaseDatabase.getReference().child("songs").child(PrefUtil.getEmail(getContext()).split("@")[0]);
 
 
         mProgressBar.setVisibility(ProgressBar.INVISIBLE);
 
         //Init RecyclerView
-        mAdapter = new UsersSongsRecyclerViewAdaptor(getContext() , userList);
+        mAdapter = new UsersSongsRecyclerViewAdaptor(getContext(),userList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());

@@ -15,5 +15,9 @@
         android:id="@+id/profile_menu"
         android:title="Profile"
         app:showAsAction="never"/>
+    <item
+        android:id="@+id/add_group_menu"
+        android:title="Add Group"
+        app:showAsAction="never"/>
 
 </menu>

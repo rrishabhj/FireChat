@@ -3,4 +3,7 @@
     <string name="sign_out">Sign Out</string>
     <string name="send_button_label">Send</string>
     <string name="select_all">Select All</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="show_loc">Show Locations</string>
+    <string name="open_profile">Open Profile</string>
 </resources>

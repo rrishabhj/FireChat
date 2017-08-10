@@ -70,6 +70,15 @@
             android:layout_height="match_parent"
             android:scrollbars="vertical" />
 
+        <TextView
+            android:id="@+id/tvIsSongsPresen"
+            android:visibility="gone"
+            android:text="No Songs Currently Shared"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
     </FrameLayout>
 
     <android.support.design.widget.FloatingActionButton

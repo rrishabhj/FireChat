@@ -144,13 +144,6 @@
 
                     </LinearLayout>
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:srcCompat="@drawable/ic_setting"
-                        android:id="@+id/imageView"
-                        android:layout_gravity="center"
-                        android:layout_weight="1"/>
                 </LinearLayout>
 
                 </android.support.v7.widget.Toolbar>

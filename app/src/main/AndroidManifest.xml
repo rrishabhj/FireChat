@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.google.firebase.udacity.friendlychat">
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
@@ -11,6 +13,10 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,10 +25,26 @@
             </intent-filter>
         </activity>
         <activity android:name=".ChatActiivty" />
-        <activity android:name=".ProfileActivity" />
-        <activity android:name=".SongActivity" />
         <activity android:name=".MySongsActivity" />
-        <activity android:name=".SongsProfile"></activity>
+        <activity android:name=".SongsProfile" />
+        <activity
+            android:name=".UsersMapsActivity"
+            android:label="@string/title_activity_maps">
+        </activity>
+
+        <service
+            android:exported="false"
+            android:name=".service.MyLocationService"
+            android:process=":remote">
+            <intent-filter>
+                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
+            </intent-filter>
+        </service>
+
+        <activity android:name=".ContactsActivity" />
+        <activity android:name=".AddGroupActivity" />
+
+
     </application>
 
 </manifest>

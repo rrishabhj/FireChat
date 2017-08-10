@@ -87,8 +87,10 @@ public class MySongsActivity extends AppCompatActivity {
         songsRecyclerView.setItemAnimator(new DefaultItemAnimator());
         songsRecyclerView.setAdapter(mAdapter);
 
-        songList.addAll(getMp3Songs());
-        mAdapter.notifyDataSetChanged();
+        if (getMp3Songs()!=null) {
+            songList.addAll(getMp3Songs());
+            mAdapter.notifyDataSetChanged();
+        }
     }
 
 
@@ -117,7 +119,7 @@ public class MySongsActivity extends AppCompatActivity {
                             .getColumnIndex(MediaStore.Audio.Media.DATA));
 //					fullsongpath.add(fullpath);
 
-                    Bitmap cover  = getSongCoverImage(Uri.fromFile(new File(fullpath)));
+//                    Bitmap cover  = getSongCoverImage(Uri.fromFile(new File(fullpath)));
 
                     String size = String.valueOf(cursor.getInt(cursor
                             .getColumnIndex(MediaStore.Audio.Media.SIZE))/(1024*1024));

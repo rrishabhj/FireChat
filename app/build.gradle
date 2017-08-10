@@ -55,6 +55,16 @@ dependencies {
     //Circular ImageView
     compile 'de.hdodenhof:circleimageview:2.1.0'
 
+    // google drive
+    compile 'com.google.android.gms:play-services-drive:9.6.0'
+
+    compile 'com.google.android.gms:play-services-location:9.6.0'
+
+    compile 'com.google.android.gms:play-services-maps:9.6.0'
+
+    compile 'com.firebase:firebase-jobdispatcher:0.7.0'
+
+
 
 }
 
