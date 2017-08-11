@@ -26,6 +26,7 @@ import com.google.firebase.udacity.friendlychat.tabs.ChatFragment;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.google.firebase.udacity.friendlychat.Utils.PrefUtil.IS_CURRENT_USER;
 import static com.google.firebase.udacity.friendlychat.Utils.PrefUtil.USER_ID;
 import static com.google.firebase.udacity.friendlychat.Utils.PrefUtil.USER_NAME;
 
@@ -90,6 +91,7 @@ public class ContactsActivity extends AppCompatActivity {
                 Intent intent = new Intent(ContactsActivity.this, SongsProfile.class);
                 final String dbEmail= userList.get(position).getEmail().split("@")[0];
                 intent.putExtra(USER_ID, dbEmail);
+                intent.putExtra(IS_CURRENT_USER, false);
                 startActivity(intent);
 
             }

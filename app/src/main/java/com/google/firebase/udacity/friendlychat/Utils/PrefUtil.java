@@ -15,9 +15,11 @@ public class PrefUtil {
     // shared preferences key names
     public static final String LOGIN_STATUS = "LOGIN_STATUS";
     public static final String USER_ID = "USER_ID";
+    public static final String IS_CURRENT_USER = "is_current_user";
     public static final String USER_NAME = "USER_NAME";
     public static final String USER_EMAIL = "USER_EMAIL";
     public static final String USER_STATUS = "USER_STATUS";
+    private static String USER_LIKES = "USER_LIKES";
 
     /*write data to all shared preference using single method*/
     public static void saveLoginDetails(Context context, String userId, String email, String username) {
@@ -84,6 +86,19 @@ public class PrefUtil {
     public static String getEmail(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         String restoredText = prefs.getString(USER_EMAIL, null);
+        return restoredText;
+    }
+
+
+    /* User Likes */
+    public static void setLikeCount(Context context, String data) {
+        SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        prefs.putString(USER_LIKES, data).commit();
+    }
+
+    public static String getLikeCount(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        String restoredText = prefs.getString(USER_LIKES, null);
         return restoredText;
     }
 

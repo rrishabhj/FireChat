@@ -54,6 +54,9 @@ public class SongsProfile extends AppCompatActivity {
     private FloatingActionButton SongsFab;
     private FloatingActionButton songsFab;
     private TextView tvIsSongsPresen;
+    private long count = 0;
+    private boolean isCurrentUser = false;
+    private TextView tvEditProfile;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -66,12 +69,24 @@ public class SongsProfile extends AppCompatActivity {
         songsRecyclerView = (RecyclerView) findViewById(R.id.rv_songs);
         songsFab = (FloatingActionButton) findViewById(R.id.fab_add_songs);
         tvIsSongsPresen = (TextView)findViewById(R.id.tvIsSongsPresen);
+        tvEditProfile = (TextView) findViewById(R.id.tv_edit_text);
 
 //         data email when opening my and others profile
         userEmail = getIntent().getStringExtra("user_id");
+        isCurrentUser = getIntent().getBooleanExtra(PrefUtil.IS_CURRENT_USER,false);
+
+        if (!isCurrentUser){
+            tvEditProfile.setVisibility(View.GONE);
+        }else {
+            tvEditProfile.setVisibility(View.VISIBLE);
+        }
+
         if (userEmail==null){
+            isCurrentUser = true;
             userEmail = PrefUtil.getEmail(SongsProfile.this).split("@")[0];
             songsFab.setVisibility(View.VISIBLE);
+        }else {
+            isCurrentUser = false;
         }
 
 //        userEmail = "jindalrish";
@@ -85,6 +100,7 @@ public class SongsProfile extends AppCompatActivity {
 
         // Initialize Firebase components
         mSongsDatabaseReference = mFirebaseDatabase.getReference().child("songs").child(userEmail);
+        mUsersDatabaseReference = mFirebaseDatabase.getReference().child("users");
 
         profileName = (TextView) findViewById(R.id.appbar_name);
         profileName.setText(userEmail);
@@ -97,6 +113,7 @@ public class SongsProfile extends AppCompatActivity {
             }
         });
 
+        System.gc();
 
     }
 
@@ -120,6 +137,19 @@ public class SongsProfile extends AppCompatActivity {
 
                             tvIsSongsPresen.setVisibility(View.GONE);
                         }
+
+
+                        count++;
+
+                        Log.i("SongsProfile", dataSnapshot.getChildrenCount()+"");
+
+
+//                        if(count >= dataSnapshot.getChildrenCount() && isCurrentUser ){
+//                            //stop progress bar here
+//
+//                            mUsersDatabaseReference.child(userEmail).child("songsSize").setValue(String.valueOf(count-1));
+//                        }
+//                        Log.i("SongsProfile", count+"");
                     }
 
                     public void onChildChanged(DataSnapshot dataSnapshot, String s) {
@@ -147,6 +177,10 @@ public class SongsProfile extends AppCompatActivity {
 
     }
 
+    public void onEditProfile(View view){
+        startActivity(new Intent(SongsProfile.this,ProfileActivity.class));
+    }
+
     private void detachDatabaseReadListener() {
         if (mChildEventListener != null) {
             mSongsDatabaseReference.removeEventListener(mChildEventListener);
@@ -165,6 +199,18 @@ public class SongsProfile extends AppCompatActivity {
         super.onPause();
 //        mAdapter.clear();
         detachDatabaseReadListener();
+    }
+
+
+    public void likeProfile(View view){
+        int count =0;
+        if ( PrefUtil.getLikeCount(this)!=null) {
+            count= Integer.valueOf(PrefUtil.getLikeCount(this)) +1;
+        }else{
+            count = 1;
+        }
+
+        mUsersDatabaseReference.child(userEmail).child("likes").setValue(String.valueOf(count));
     }
 
 

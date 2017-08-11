@@ -569,8 +569,10 @@ public class ChatActiivty extends AppCompatActivity {
                             .setService(MyLocationService.class) // the JobService that will be called
                             .setTag("my-unique-tag")        // uniquely identifies the job
                             .setRecurring(true)
-                            .setLifetime(Lifetime.UNTIL_NEXT_BOOT)
-                            .setTrigger(Trigger.executionWindow(0, 3))
+                            .setLifetime(Lifetime.FOREVER)
+                            // don't overwrite an existing job with the same tag
+                            .setReplaceCurrent(false)
+                            .setTrigger(Trigger.executionWindow(0, 120))
                             .build();
 
                     dispatcher.mustSchedule(myJob);

@@ -20,6 +20,9 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static com.google.firebase.udacity.friendlychat.Utils.PrefUtil.IS_CURRENT_USER;
+import static com.google.firebase.udacity.friendlychat.Utils.PrefUtil.USER_ID;
+
 /**
  * Created by DMI on 24-07-2017.
  */
@@ -60,6 +63,8 @@ public class UsersSongsRecyclerViewAdaptor extends RecyclerView.Adapter<UsersSon
 
             if (view.getId() == circleImageView.getId()){
                 intent = new Intent(context, SongsProfile.class);
+                intent.putExtra(IS_CURRENT_USER, false);
+
             }else if (view.getId() == imgMessage.getId()){
                 intent = new Intent(context, ChatActiivty.class);
             }

@@ -2,6 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_vertical_margin"
+    android:paddingRight="@dimen/activity_vertical_margin"
+    android:paddingTop="@dimen/activity_horizontal_margin"
+    android:paddingBottom="@dimen/activity_horizontal_margin"
     android:layout_width="400dp">
 
     <EditText
@@ -13,9 +17,10 @@
         android:hint="I am feeling good!" />
 
     <Button
-        android:text="Button"
+        android:text="Update"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/btnUpdateStatus"
-        android:layout_gravity="center" />
+        android:layout_gravity="center"
+        android:layout_margin="12dp" />
 </LinearLayout>

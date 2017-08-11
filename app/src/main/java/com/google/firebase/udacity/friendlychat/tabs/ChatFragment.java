@@ -125,6 +125,7 @@ public class ChatFragment extends Fragment {
 	private FloatingActionButton fabAddContacts;
 	private UsersMessageRecyclerView mAdapter2;
 	private String myEmail;
+	public String IS_CURRENT_USER = "is_Current_user";
 
 
 	@Override
@@ -228,26 +229,27 @@ public class ChatFragment extends Fragment {
 				Intent intent = new Intent(getContext(), SongsProfile.class);
 				final String dbEmail= userList2.get(position).getEmail().split("@")[0];
 				intent.putExtra(USER_ID, dbEmail);
+				intent.putExtra(IS_CURRENT_USER, false);
 				startActivity(intent);
 
 			}
 		}));
 
-		btnEnableLoc.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-
-				new Thread(new Runnable() {
-					@Override
-					public void run() {
-
-						getContext().startService(new Intent(getContext(), MyLocationService.class));
-
-					}
-				}).start();
-
-			}
-		});
+//		btnEnableLoc.setOnClickListener(new View.OnClickListener() {
+//			@Override
+//			public void onClick(View view) {
+//
+//				new Thread(new Runnable() {
+//					@Override
+//					public void run() {
+//
+//						getContext().startService(new Intent(getContext(), MyLocationService.class));
+//
+//					}
+//				}).start();
+//
+//			}
+//		});
 
 		mAuthStateListener = new FirebaseAuth.AuthStateListener() {
 			@Override
@@ -324,8 +326,12 @@ public class ChatFragment extends Fragment {
 					public void onDataChange(DataSnapshot dataSnapshot) {
 						if (dataSnapshot.hasChild(db_Email)) {
 							Toast.makeText(getContext(),"Signing in",Toast.LENGTH_LONG).show();
+							initPrefFromFirebase(db_Email);
 						}else{
 							mUsersDatabaseReference.child(db_Email).setValue(user1);
+							PrefUtil.setStatus(getContext(),user1.getIsReceipt());
+
+
 						}
 					}
 
@@ -340,8 +346,6 @@ public class ChatFragment extends Fragment {
 				//save in sharedpref
 				PrefUtil.saveLoginDetails(getContext(),key,email,name);
 
-				//isreceipt is used as status
-				PrefUtil.setStatus(getContext(),user1.getIsReceipt());
 
 			} else if (resultCode == RESULT_CANCELED) {
 				// Sign in was canceled by the user, finish the activity
@@ -349,6 +353,28 @@ public class ChatFragment extends Fragment {
 				getActivity().finish();
 			}
 		}
+	}
+
+	public void initPrefFromFirebase(String db_Email){
+
+
+		mUsersDatabaseReference.child(db_Email).addValueEventListener(new ValueEventListener() {
+			@Override
+			public void onDataChange(DataSnapshot dataSnapshot) {
+				Map user = (Map) dataSnapshot.getValue();
+
+				String status = (String) user.get("status");
+				String likes = (String) user.get("likes");
+
+				PrefUtil.setStatus(getContext(),status);
+				PrefUtil.setLikeCount(getContext(),likes);
+			}
+
+			@Override
+			public void onCancelled(DatabaseError databaseError) {
+
+			}
+		});
 	}
 
 	@Override

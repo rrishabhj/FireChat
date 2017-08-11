@@ -83,6 +83,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.google.firebase.udacity.friendlychat.Utils.PrefUtil.IS_CURRENT_USER;
+import static com.google.firebase.udacity.friendlychat.Utils.PrefUtil.USER_ID;
+
 public class MainActivity extends AppCompatActivity implements
         GoogleApiClient.OnConnectionFailedListener{
 
@@ -153,7 +156,10 @@ public class MainActivity extends AppCompatActivity implements
 
             case R.id.profile_menu:
 
-                startActivity(new Intent(MainActivity.this,SongsProfile.class));
+                Intent intent = new Intent(MainActivity.this,SongsProfile.class);
+                intent.putExtra(USER_ID, PrefUtil.getEmail(this).split("@")[0]);
+                intent.putExtra(IS_CURRENT_USER, true);
+                startActivity(intent);
                 break;
             case R.id.add_group_menu:
 

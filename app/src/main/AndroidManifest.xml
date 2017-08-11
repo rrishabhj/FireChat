@@ -31,11 +31,11 @@
             android:name=".UsersMapsActivity"
             android:label="@string/title_activity_maps">
         </activity>
+        <activity android:name=".ProfileActivity"/>
 
         <service
             android:exported="false"
-            android:name=".service.MyLocationService"
-            android:process=":remote">
+            android:name=".service.MyLocationService">
             <intent-filter>
                 <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
             </intent-filter>

@@ -7,7 +7,7 @@
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="174dp">
+        android:layout_height="194dp">
 
 
         <LinearLayout
@@ -40,6 +40,15 @@
 
 
                 <TextView
+                    android:text="Edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="#ffffff"
+                    android:id="@+id/tv_edit_text"
+                    android:onClick="onEditProfile" />
+
+                <TextView
                     android:id="@+id/appbar_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -49,6 +58,13 @@
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                     android:textColor="#ffffff"
                     android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="21dp"
+                    app:srcCompat="@drawable/ic_like_red"
+                    android:id="@+id/imageView"
+                    android:onClick="likeProfile" />
 
 
             </LinearLayout>
@@ -61,7 +77,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="174dp"
+        android:layout_marginTop="194dp"
         android:orientation="vertical">
 
         <android.support.v7.widget.RecyclerView

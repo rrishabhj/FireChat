@@ -49,6 +49,7 @@ public class MySongsActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private boolean isSelectAll;
     private List<Song> currentSelectedItems = new ArrayList<>();
+    private DatabaseReference mUsersDatabaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,9 +66,12 @@ public class MySongsActivity extends AppCompatActivity {
 //        // data from intent
 //        userEmail = getIntent().getStringExtra("user_id");
 
+        userEmail = PrefUtil.getEmail(MySongsActivity.this).split("@")[0];
+
         // Initialize Firebase components
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mSongsDatabaseReference = mFirebaseDatabase.getReference().child("songs").child(PrefUtil.getEmail(MySongsActivity.this).split("@")[0]);
+        mUsersDatabaseReference = mFirebaseDatabase.getReference().child("users");
 
 
         mAdapter = new SongsRecyclerViewAdaptor(songList, new SongsRecyclerViewAdaptor.OnItemCheckListener() {
@@ -209,7 +213,9 @@ public class MySongsActivity extends AppCompatActivity {
                 mSongsDatabaseReference.child(song.getMediaId()).setValue(song);
                 Toast.makeText(MySongsActivity.this,song.getMediaName(),Toast.LENGTH_SHORT).show();
             }
+            mUsersDatabaseReference.child(userEmail).child("songsSize").setValue(String.valueOf(currentSelectedItems.size()));
         }
+
         finish();
     }
 
