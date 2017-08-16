@@ -21,7 +21,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridLayout;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -111,6 +114,10 @@ public class ChatActiivty extends AppCompatActivity {
     private DatabaseReference mUsersDatabaseListnerReference;
     private LinearLayoutManager mLayoutManager;
     private DatabaseReference mChatpropDatabseReference;
+    private ImageButton photoPickerButton;
+    private GridLayout linearLayout2;
+    private boolean isClicked = false;
+    private TextView sharelocation;
 
 
     @Override
@@ -136,6 +143,10 @@ public class ChatActiivty extends AppCompatActivity {
         mSendButton = (Button) findViewById(R.id.sendButton);
         recyclerView = (RecyclerView) findViewById(R.id.rv_message);
 
+        photoPickerButton = (ImageButton)findViewById(R.id.photoPickerButton);
+        linearLayout2 = (GridLayout)findViewById(R.id.linearLayout2);
+        sharelocation = (TextView )findViewById(R.id.share_location);
+
 
         // get senders user_id = email
         senderUserId = getIntent().getStringExtra("user_id");
@@ -143,6 +154,19 @@ public class ChatActiivty extends AppCompatActivity {
         if (senderUserId==null){
             return;
         }
+
+        photoPickerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!isClicked) {
+                    linearLayout2.setVisibility(View.VISIBLE);
+                    isClicked=true;
+                }else {
+                    linearLayout2.setVisibility(View.GONE);
+                    isClicked=false ;
+                }
+            }
+        });
 
 //        mMessagesDatabaseReference = mFirebaseDatabase.getReference().child("messages").child(PrefUtil.getUserId(ChatActiivty.this)).child(senderUserId).child("chat");
 
@@ -570,7 +594,7 @@ public class ChatActiivty extends AppCompatActivity {
                             .setTag("my-unique-tag")        // uniquely identifies the job
                             .setRecurring(true)
                             .setLifetime(Lifetime.FOREVER)
-                            // don't overwrite an existing job with the same tag
+//                             don't overwrite an existing job with the same tag
                             .setReplaceCurrent(false)
                             .setTrigger(Trigger.executionWindow(0, 120))
                             .build();
@@ -591,6 +615,10 @@ public class ChatActiivty extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public void giveLocPermission(View view){
+
     }
 
 

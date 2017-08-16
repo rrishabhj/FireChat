@@ -43,7 +43,7 @@
             android:orientation="horizontal">
 
             <ImageButton
-                android:visibility="gone"
+                android:visibility="visible"
                 android:id="@+id/photoPickerButton"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
@@ -65,6 +65,35 @@
                 android:text="@string/send_button_label"/>
 
         </LinearLayout>
+
+        <GridLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#f3f3f3"
+        android:padding="12dp"
+        android:columnCount="1"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:orientation="horizontal"
+        android:visibility="gone">
+        <TextView
+        android:text="ShareLoca"
+        android:visibility="visible"
+        android:id="@+id/share_location"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:onClick="giveLocPermission" />
+        <TextView
+        android:text="Gallery"
+        android:id="@+id/gallery_image"
+        android:layout_width="36dp"
+        android:layout_height="36dp" />
+
+        </GridLayout>
+
+
 
         <ProgressBar
             android:id="@+id/progressBar"
